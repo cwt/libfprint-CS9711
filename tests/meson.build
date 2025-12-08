@@ -335,12 +335,10 @@ endif
 
 valgrind = find_program('valgrind', required: false)
 if valgrind.found()
-    glib_share = glib_dep.get_pkgconfig_variable('prefix') / 'share' / glib_dep.name()
+    glib_share = glib_dep.get_variable(pkgconfig: 'prefix') / 'share' / glib_dep.name()
     glib_suppressions = glib_share + '/valgrind/glib.supp'
-    libfprint_suppressions = '@0@/@1@'.format(meson.project_source_root(),
-        files('libfprint.supp')[0])
-    python_suppressions = '@0@/@1@'.format(meson.project_source_root(),
-        files('valgrind-python.supp')[0])
+    libfprint_suppressions = meson.project_source_root() / 'libfprint.supp'
+    python_suppressions = meson.project_source_root() / 'valgrind-python.supp'
     libfprint_wrapper = [
         valgrind.full_path(),
         '--tool=memcheck',

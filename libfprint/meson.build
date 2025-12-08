@@ -224,7 +224,8 @@ deps = [
     gobject_dep,
     gusb_dep,
     mathlib_dep,
-] + optional_deps
+]
+deps += optional_deps
 
 subdir('sigfm')
 
@@ -250,7 +251,8 @@ libnbis = static_library('nbis',
     ]),
     install: false)
 
-priv_deps = deps + libsigfm
+priv_deps = deps
+priv_deps += [libsigfm]
 
 libfprint_private = static_library('fprint-private',
     sources: [
@@ -269,7 +271,7 @@ libfprint_drivers = static_library('fprint-drivers',
     install: false)
 
 mapfile = files('libfprint.ver')
-vflag = '-Wl,--version-script,@0@/@1@'.format(meson.project_source_root(), mapfile[0])
+vflag = '-Wl,--version-script,' + meson.current_source_dir() + '/libfprint.ver'
 
 libfprint = shared_library(versioned_libname.split('lib')[1],
     sources: [
