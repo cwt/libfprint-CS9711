@@ -1,10 +1,10 @@
 Name:           libfprint-cs9711
-Provides:       libfprint = 1.94.6-0.0.1%{?dist}
+Provides:       libfprint = 1.94.6-0.0.2%{?dist}
 Conflicts:      libfprint
 Epoch:          1
 
 Version:        1.94.6
-Release:        0.0.1%{?dist}
+Release:        0.0.2%{?dist}
 Summary:        Toolkit for fingerprint scanner
 
 License:        LGPLv2+
