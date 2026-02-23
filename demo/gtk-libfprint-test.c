@@ -102,10 +102,15 @@ plot_minutiae (unsigned char *rgbdata,
   int i;
 
 #define write_pixel(num) do { \
-            rgbdata[((num) * 3)] = 0xff; \
-            rgbdata[((num) * 3) + 1] = 0; \
-            rgbdata[((num) * 3) + 2] = 0; \
+            if ((num) >= 0 && (num) < (width * height)) { \
+              rgbdata[((num) * 3)] = 0xff; \
+              rgbdata[((num) * 3) + 1] = 0; \
+              rgbdata[((num) * 3) + 2] = 0; \
+            } \
   } while(0)
+
+  if (!minutiae || minutiae->len == 0)
+    return;
 
   for (i = 0; i < minutiae->len; i++)
     {
@@ -115,6 +120,11 @@ plot_minutiae (unsigned char *rgbdata,
 
       fp_minutia_get_coords (min, &x, &y);
       pixel_offset = (y * width) + x;
+
+      /* Check bounds before writing pixels */
+      if (x < 0 || x >= width || y < 0 || y >= height)
+        continue;
+
       write_pixel (pixel_offset - 2);
       write_pixel (pixel_offset - 1);
       write_pixel (pixel_offset);
