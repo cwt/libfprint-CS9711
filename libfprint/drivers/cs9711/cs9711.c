@@ -301,8 +301,12 @@ m_scan_submit_image (FpiSsm        *ssm,
   FpImage *img;
 
   img = fp_image_new (CS9711_WIDTH, CS9711_HEIGHT);
-  if (img == NULL)
+  if (img == NULL) {
+    fpi_ssm_mark_failed (ssm, g_error_new (FP_DEVICE_ERROR,
+                                            FP_DEVICE_ERROR_GENERAL,
+                                            "Failed to allocate image"));
     return 1;
+  }
 
   for (gsize y = 0; y < CS9711_SENSOR_HEIGHT; y++)
     for (gsize x = 0; x < CS9711_SENSOR_WIDTH; x++) {
@@ -365,7 +369,11 @@ m_scan_state (FpiSsm *ssm, FpDevice *_dev)
       break;
 
     case M_SCAN_IMAGE_COMPLETE:
-      m_scan_submit_image (ssm, image_device);
+      /* Check if image allocation failed */
+      if (m_scan_submit_image (ssm, image_device) != 0) {
+        /* Image allocation failed, ssm already marked failed in function */
+        return;
+      }
       fpi_image_device_report_finger_status (image_device, FALSE);
       fpi_ssm_mark_completed (ssm);
       break;

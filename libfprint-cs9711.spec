@@ -4,7 +4,7 @@ Conflicts:      libfprint
 Epoch:          1
 
 Version:        1.94.6
-Release:        0.0.2%{?dist}
+Release:        0.0.3%{?dist}
 Summary:        Toolkit for fingerprint scanner
 
 License:        LGPLv2+
@@ -78,4 +78,9 @@ developing applications that use %{name}.
 %{_datadir}/gtk-doc/html/libfprint-2/
 
 %changelog
+* Mon Feb 23 2026 cwt <cwt@bashell.com> - 1.94.6-0.0.3
+- Fix NULL pointer crash when fp_image_new() fails in cs9711 driver
+- Add cmake BuildRequires for doctest dependency resolution
+- Update CS9711-BUGS.md documentation
+
 %autochangelog
