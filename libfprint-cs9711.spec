@@ -32,6 +32,7 @@ BuildRequires:  python3-cairo python3-gobject cairo-devel
 BuildRequires:  umockdev >= 0.13.2
 BuildRequires:  opencv-devel
 BuildRequires:  doctest-devel
+BuildRequires:  cmake
 
 %description
 libfprint offers support for consumer fingerprint reader devices.
