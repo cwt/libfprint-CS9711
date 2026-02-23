@@ -221,6 +221,118 @@ if ((CS9711_FRAME_SIZE) != (CS9711_FP_RECV_LEN_1 + CS9711_FP_RECV_LEN_2)) {
 }
 ```
 
+### 8. USB Timeout Value of 0 Undocumented - NOTED
+
+**Status**: Noted (functional but undocumented)
+
+**Description**
+
+The `usb_read_in()` call in the scan state machine uses a timeout value of `0`, which relies on libfprint's default timeout behavior.
+
+**Location**
+
+`libfprint/drivers/cs9711/cs9711.c` line 341
+
+**Current Code**
+
+```c
+usb_read_in (_dev, ssm, CS9711_FP_RECV_LEN_1, FALSE, 0, m_scan_read_cb_bulk, ...);
+```
+
+**Analysis**
+
+A timeout of `0` in `fpi_usb_transfer_submit()` typically means "use default timeout" in libfprint. While this is functional, it should be documented or use an explicit constant for clarity.
+
+**Recommendation**
+
+Consider using `CS9711_DEFAULT_WAIT_TIMEOUT` for consistency with other USB operations.
+
+## Known Issues Not Yet Fixed
+
+### 1. Missing NULL Check After fp_image_new()
+
+**Status**: **NOT FIXED** - Requires attention
+
+**Severity**: High
+
+**Description**
+
+The `m_scan_submit_image()` function checks if `fp_image_new()` returns NULL but the caller ignores the return value, potentially causing a crash when accessing the NULL image pointer.
+
+**Location**
+
+`libfprint/drivers/cs9711/cs9711.c` lines 296-321 and 358
+
+**Current Code**
+
+```c
+// Line 296-306: Function returns 1 on failure
+static int
+m_scan_submit_image (FpiSsm        *ssm,
+                     FpImageDevice *dev)
+{
+  FpDeviceCs9711 *self = FPI_DEVICE_CS9711 (dev);
+  FpImage *img;
+
+  img = fp_image_new (CS9711_WIDTH, CS9711_HEIGHT);
+  if (img == NULL)
+    return 1;  // ← Returns 1 on failure
+
+  // ... image processing ...
+}
+
+// Line 358: Caller ignores return value
+case M_SCAN_IMAGE_COMPLETE:
+  m_scan_submit_image (ssm, image_device);  // ← Return value IGNORED!
+  fpi_image_device_report_finger_status (image_device, FALSE);
+  fpi_ssm_mark_completed (ssm);  // ← Marks as completed even with NULL img!
+  break;
+```
+
+**Impact**
+
+If `fp_image_new()` fails (e.g., due to memory pressure), the driver will crash when trying to access `img->data` in the image processing loop.
+
+**Fix Required**
+
+Mark the SSM as failed when image allocation fails instead of continuing:
+
+```c
+static int
+m_scan_submit_image (FpiSsm        *ssm,
+                     FpImageDevice *dev)
+{
+  FpDeviceCs9711 *self = FPI_DEVICE_CS9711 (dev);
+  FpImage *img;
+
+  img = fp_image_new (CS9711_WIDTH, CS9711_HEIGHT);
+  if (img == NULL) {
+    fpi_ssm_mark_failed (ssm, g_error_new (FP_DEVICE_ERROR, 
+                                            FP_DEVICE_ERROR_GENERAL,
+                                            "Failed to allocate image"));
+    return 1;
+  }
+  // ... rest of function
+}
+```
+
+## Verification Notes
+
+This document was verified against the actual source code on **2026-02-23**. All documented fixes were confirmed to be present in the codebase:
+
+| Bug # | Status | Verified Line(s) |
+|-------|--------|------------------|
+| 1 | ✅ Fixed | 312-316 |
+| 2 | ✅ Fixed | 312-316 |
+| 3 | ✅ Fixed | 111-113 |
+| 4 | ✅ Fixed | 340-351 |
+| 5 | ✅ Fixed | 180 |
+| 6 | ✅ Addressed | 408 |
+| 7 | ✅ Fixed | 459-464 |
+| 8 | ⚠️ Noted | 341 |
+
 ## Summary
 
 All identified bugs have been successfully fixed and validated through successful compilation of the entire project. The fixes improve the robustness and safety of the CS9711 driver while maintaining backward compatibility.
+
+One additional bug (#1 - NULL check) has been identified but not yet fixed. This should be addressed in a future update.
