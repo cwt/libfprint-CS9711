@@ -291,22 +291,363 @@ case M_SCAN_IMAGE_COMPLETE:
 
 ## Verification Notes
 
-This document was verified against the actual source code on **2026-02-23**. All documented fixes were confirmed to be present in the codebase:
+This document was verified against the actual source code on **2026-04-20**. All documented fixes and issues were re-validated:
 
 | Bug # | Status | Verified Line(s) |
 |-------|--------|------------------|
 | 1 | ✅ Fixed | 312-316 |
 | 2 | ✅ Fixed | 312-316 |
 | 3 | ✅ Fixed | 111-113 |
-| 4 | ✅ Fixed | 340-351 |
+| 4 | ⚠️ Partially Fixed (new race introduced) | 344-350 |
 | 5 | ✅ Fixed | 180 |
 | 6 | ✅ Addressed | 408 |
 | 7 | ✅ Fixed | 463-468 |
-| 8 | ⚠️ Noted | 341 |
+| 8 | ⚠️ Noted (still unfixed in scan path) | 347 |
 | Known #1 | ✅ Fixed | 304-309, 369-376 |
+| **N-1** | ❌ Unfixed | 400-404 |
+| **N-2** | ❌ Unfixed | 415-416 |
+| **N-3** | ❌ Unfixed | 246-294 |
+| **N-4** | ❌ Unfixed | 344-350 |
+| **N-5** | ✅ Not a Bug (Analysis Corrected) | 311-322 |
+| **N-6** | ❌ Unfixed | 113 |
+| **N-7** | ❌ Unfixed | 416 |
+| **N-8** | ❌ Unfixed | 84-88 |
+| **N-9** | ❌ Unfixed | 317-319 |
+| **N-10** | ❌ Unfixed | 479 |
+| **N-11** | ❌ Unfixed | 475, cs9711.h:3 |
+| **N-12** | ❌ Unfixed | 347 |
 
 ## Summary
 
-All identified bugs have been successfully fixed and validated through successful compilation of the entire project. The fixes improve the robustness and safety of the CS9711 driver while maintaining backward compatibility.
+All identified bugs in the "Fixed Bugs" section have been successfully fixed and validated through successful compilation of the entire project. The fixes improve the robustness and safety of the CS9711 driver while maintaining backward compatibility.
 
 One remaining low-severity issue (Bug #8 - undocumented USB timeout value) has been noted for future cleanup.
+
+---
+
+# Newly Discovered Unfixed Bugs
+
+This section documents bugs identified during a deep code analysis on **2026-04-20**. These issues have **not yet been fixed**.
+
+## Critical Severity
+
+### N-1. No Deactivation Cleanup for In-Flight USB Transfers
+
+**Severity**: Critical
+
+**Description**
+
+`dev_deactivate` immediately calls `fpi_image_device_deactivate_complete()` without cancelling any pending USB transfers or stopping the running scan SSM. If a USB read is in-flight when deactivation fires, its callback (`m_scan_read_cb_bulk`) will later access `transfer->ssm` which may already be freed — causing a **use-after-free crash**.
+
+Every other driver in libfprint (vfs7552, vfs5011, upektc_img, nb1010, vcom5s, elan, aes2550, etc.) uses a `deactivating` flag and checks it in USB callbacks to bail out early.
+
+**Location**
+
+`libfprint/drivers/cs9711/cs9711.c` lines 400-404
+
+**Current Code**
+
+```c
+static void
+dev_deactivate (FpImageDevice *dev)
+{
+  fpi_image_device_deactivate_complete (dev, NULL);
+}
+```
+
+**Suggested Fix**
+
+Add `FpiSsm *scan_ssm` and `gboolean deactivating` fields to `struct _FpDeviceCs9711`. In `dev_deactivate`, set `self->deactivating = TRUE`, and if `self->scan_ssm` is non-NULL, mark it completed. In all USB callbacks, check `self->deactivating` first and return early if set.
+
+### N-2. Scan SSM Pointer Never Stored
+
+**Severity**: Critical
+
+**Description**
+
+The scan SSM is created with `fpi_ssm_new()` and started with `fpi_ssm_start()`, but the pointer is a local variable that is immediately lost. Without storing it in the device struct, there is **no way to cancel or stop the scan** during deactivation.
+
+**Location**
+
+`libfprint/drivers/cs9711/cs9711.c` lines 415-416
+
+**Current Code**
+
+```c
+static void
+dev_change_state (FpImageDevice *dev, FpiImageDeviceState state)
+{
+  FpiSsm *ssm_loop;
+
+  if (state != FPI_IMAGE_DEVICE_STATE_AWAIT_FINGER_ON)
+    return;
+
+  ssm_loop = fpi_ssm_new (FP_DEVICE (dev), m_scan_state, M_SCAN_STATE_COUNT);
+  fpi_ssm_start (ssm_loop, NULL);
+}
+```
+
+**Comparison**
+
+`nb1010.c:93` stores `FpiSsm *ssm` in its struct and uses it for cleanup.
+
+**Suggested Fix**
+
+Add `FpiSsm *scan_ssm` to `struct _FpDeviceCs9711` in `cs9711.h`. Store the pointer: `self->scan_ssm = ssm_loop`. Clear it in a proper SSM completion callback.
+
+### N-3. Use-After-Free in `m_scan_read_cb_bulk` After Device Close
+
+**Severity**: Critical
+
+**Description**
+
+The USB read callback accesses `FpDeviceCs9711 *self` and `transfer->ssm`. If the device is closed or deactivated while the transfer is pending, the SSM may be freed before the callback fires. No `deactivating` guard exists to prevent post-deactivation callback execution.
+
+**Location**
+
+`libfprint/drivers/cs9711/cs9711.c` lines 246-294
+
+**Suggested Fix**
+
+Same as N-1: add `deactivating` flag and check it at the start of `m_scan_read_cb_bulk`:
+
+```c
+if (self->deactivating)
+  {
+    fp_dbg ("deactivating, marking completed");
+    fpi_ssm_mark_completed (transfer->ssm);
+    return;
+  }
+```
+
+## High Severity
+
+### N-4. Race Condition in `M_SCAN_INIT_READ` — Timer vs USB Callback
+
+**Severity**: High
+
+**Description**
+
+Two competing mechanisms try to advance the SSM from `M_SCAN_INIT_READ`:
+1. The USB read callback (`m_scan_read_cb_bulk`) calls `fpi_ssm_next_state()` when it completes
+2. `fpi_ssm_next_state_delayed(ssm, 10)` schedules a timer to advance after 10ms
+
+If the USB read completes **before** 10ms, the callback advances to `M_SCAN_WAIT_FOR_DELAY_BEFORE_SCAN` and sends the SCAN command immediately — defeating the purpose of the delay. If the read hasn't completed when the timer fires, the SCAN command is sent while the previous read callback is still pending — potentially **double-advancing the SSM**.
+
+The state `M_SCAN_WAIT_FOR_READ_TO_COMPLETE` (line 358) exists as an idle wait state but is **never reached** because `M_SCAN_INIT_READ` always schedules a delayed transition instead of waiting for the callback.
+
+**Location**
+
+`libfprint/drivers/cs9711/cs9711.c` lines 344-350
+
+**Current Code**
+
+```c
+case M_SCAN_INIT_READ:
+  usb_read_in (_dev, ssm, CS9711_FP_RECV_LEN_1, FALSE, 0, m_scan_read_cb_bulk, M_SCAN_READ_CB_BULK_UD_FIRST_BLOCK);
+  fpi_ssm_next_state_delayed (ssm, 10);
+  break;
+
+case M_SCAN_WAIT_FOR_DELAY_BEFORE_SCAN:
+  usb_send_out_sync (_dev, CS9711_FP_CMD_TYPE_SCAN, &error);
+  ...
+```
+
+**Suggested Fix**
+
+Restructure so that `M_SCAN_INIT_READ` only submits the read, and the read callback advances to a new state that sends the SCAN command. The `M_SCAN_WAIT_FOR_READ_TO_COMPLETE` state should be the target of the callback, not bypassed by a timer.
+
+### N-5. [NOT A BUG] Image Transformation Logic Verified
+
+**Status**: Invalid (Analysis Corrected)
+
+**Description**
+
+Initial analysis suggested a checkerboard interleave leaving half the pixels unwritten. However, a deeper verification of the mapping logic shows that every pixel in the destination image is correctly filled.
+
+**Analysis**
+
+The mapping uses `dy = y / 2` and `dx = x * 2 + y % 2`.
+- When `y` is even (`y % 2 == 0`), `dy = y / 2` and `dx` covers all **even** columns (`0, 2, ..., 66`).
+- When `y` is odd (`y % 2 == 1`), `dy = (y-1) / 2` (same as the previous even `y`) and `dx` covers all **odd** columns (`1, 3, ..., 67`).
+
+Thus, for every pair of source rows (`y, y+1`), one complete destination row (`dy`) is fully populated. No pixels are left unwritten.
+
+**Location**
+
+`libfprint/drivers/cs9711/cs9711.c` lines 311-322
+
+### N-6. `short_is_error` Parameter Forcibly Overridden
+
+**Severity**: High
+
+**Description**
+
+The `short_is_error` parameter passed by the caller is always forced to `FALSE` inside `usb_read_in`, making it a dead parameter. This is misleading API design and could mask bugs if a caller expects short reads to be errors.
+
+**Location**
+
+`libfprint/drivers/cs9711/cs9711.c` line 113
+
+**Current Code**
+
+```c
+static void
+usb_read_in (FpDevice *dev,
+             FpiSsm *ssm,
+             gsize length,
+             gboolean short_is_error,  // <-- caller passes this
+             guint timeout_in_ms,
+             FpiUsbTransferCallback callback,
+             gpointer user_data)
+{
+  ...
+  short_is_error = FALSE;  // <-- always overridden
+  transfer = fpi_usb_transfer_new (FP_DEVICE (dev));
+  transfer->short_is_error = short_is_error;
+  ...
+}
+```
+
+**Suggested Fix**
+
+Either remove the parameter entirely (since it's always FALSE) or respect the caller's value and document why it's sometimes overridden.
+
+## Medium Severity
+
+### N-7. Scan SSM Completion Callback is `NULL`
+
+**Severity**: Medium
+
+**Description**
+
+When the scan SSM completes (success or failure), **no cleanup runs**. Errors are silently dropped — the framework is never notified of scan failures. The SSM is freed internally but there's no hook to clear `self->scan_ssm` or report errors.
+
+**Location**
+
+`libfprint/drivers/cs9711/cs9711.c` line 416
+
+**Current Code**
+
+```c
+fpi_ssm_start (ssm_loop, NULL);
+```
+
+**Comparison**
+
+`vfs101.c:1253` and `nb1010.c:408` pass proper completion callbacks.
+
+**Suggested Fix**
+
+Provide a completion callback that handles errors and clears `self->scan_ssm = NULL`.
+
+### N-8. "Continuing Anyway" Warning Contradicts Error Propagation
+
+**Severity**: Medium
+
+**Description**
+
+`usb_send_out_sync` logs a warning saying "continuing anyway" but still propagates the error to the caller. Some callers handle this correctly (e.g., `M_INIT_STATE_SEND_INI_QUERY` checks for timeout and continues), but others (e.g., `M_SCAN_SEND_POST_SCAN`) will fail the SSM on any error, contradicting the "continuing anyway" intent.
+
+**Location**
+
+`libfprint/drivers/cs9711/cs9711.c` lines 84-88
+
+**Current Code**
+
+```c
+if (err)
+  {
+    g_warning ("Error while sending command 0x%X, continuing anyway: %s", type, err->message);
+    g_propagate_error (error, err);
+  }
+```
+
+**Suggested Fix**
+
+Either don't propagate the error (if truly "continuing anyway"), or change the warning message to reflect that the error is being propagated. Alternatively, make the "continue on error" behavior explicit via a parameter.
+
+### N-9. Redundant Bounds Checks in `m_scan_submit_image`
+
+**Severity**: Medium
+
+**Description**
+
+The four conditions in the bounds check are mathematically redundant given the loop bounds. `dy < CS9711_HEIGHT` and `dx < CS9711_WIDTH` already guarantee the linear indices are in bounds. The extra checks give a false sense of safety and obscure the real issue (N-4 — race condition).
+
+**Location**
+
+`libfprint/drivers/cs9711/cs9711.c` lines 317-319
+
+## Low Severity
+
+### N-10. `nr_enroll_stages = 15` is Unusually High
+
+**Severity**: Low
+
+**Description**
+
+Most fingerprint drivers use 3–8 enrollment stages. 15 may be intentional for this sensor's quality requirements but causes poor user experience.
+
+**Location**
+
+`libfprint/drivers/cs9711/cs9711.c` line 479
+
+### N-11. Typo: "Fingprint" Throughout
+
+**Severity**: Low
+
+**Description**
+
+"Fingprint" should be "Fingerprint" in multiple places.
+
+**Location**
+
+`cs9711.c:475` ("Chipsailing CS9711Fingprint"), `cs9711.h:3` (comment)
+
+### N-12. USB Timeout of `0` in Scan Read
+
+**Severity**: Low
+
+**Description**
+
+A timeout of `0` means "use default" in libfprint. Should use `CS9711_DEFAULT_WAIT_TIMEOUT` for consistency and clarity. This was previously noted as Bug #8 in the fixed section but remains unfixed in the scan read path.
+
+**Location**
+
+`libfprint/drivers/cs9711/cs9711.c` line 347
+
+## Updated Verification Notes
+
+| Bug # | Status | Verified Line(s) |
+|-------|--------|------------------|
+| 1 | ✅ Fixed | 312-316 |
+| 2 | ✅ Fixed | 312-316 |
+| 3 | ✅ Fixed | 111-113 |
+| 4 | ⚠️ Partially Fixed (new race introduced) | 344-350 |
+| 5 | ✅ Fixed | 180 |
+| 6 | ✅ Addressed | 408 |
+| 7 | ✅ Fixed | 463-468 |
+| 8 | ⚠️ Noted (still unfixed in scan path) | 347 |
+| Known #1 | ✅ Fixed | 304-309, 369-376 |
+| **N-1** | ❌ Unfixed | 400-404 |
+| **N-2** | ❌ Unfixed | 415-416 |
+| **N-3** | ❌ Unfixed | 246-294 |
+| **N-4** | ❌ Unfixed | 344-350 |
+| **N-5** | ✅ Not a Bug (Analysis Corrected) | 311-322 |
+| **N-6** | ❌ Unfixed | 113 |
+| **N-7** | ❌ Unfixed | 416 |
+| **N-8** | ❌ Unfixed | 84-88 |
+| **N-9** | ❌ Unfixed | 317-319 |
+| **N-10** | ❌ Unfixed | 479 |
+| **N-11** | ❌ Unfixed | 475, cs9711.h:3 |
+| **N-12** | ❌ Unfixed | 347 |
+
+## Summary of Unfixed Bugs
+
+| Severity | Count | Issues |
+|----------|-------|--------|
+| Critical | 3 | N-1, N-2, N-3 (deactivation/use-after-free) |
+| High | 2 | N-4 (race condition), N-6 (dead parameter) |
+| Medium | 3 | N-7 (NULL callback), N-8 (error propagation), N-9 (redundant checks) |
+| Low | 3 | N-10 (enroll stages), N-11 (typo), N-12 (timeout) |
