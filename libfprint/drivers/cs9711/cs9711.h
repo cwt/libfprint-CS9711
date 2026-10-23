@@ -35,6 +35,7 @@ struct _FpDeviceCs9711
   FpImageDevice parent;
 
   unsigned char image_buffer[CS9711_FRAME_SIZE];
+  guint         drain_reads;
 };
 
 G_DECLARE_FINAL_TYPE (FpDeviceCs9711, fpi_device_cs9711, FPI, DEVICE_CS9711, FpImageDevice)

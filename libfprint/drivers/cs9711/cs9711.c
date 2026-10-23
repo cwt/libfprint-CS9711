@@ -32,6 +32,8 @@ G_DEFINE_TYPE (FpDeviceCs9711, fpi_device_cs9711, FP_TYPE_IMAGE_DEVICE)
 
 #define CS9711_DEFAULT_WAIT_TIMEOUT 300
 #define CS9711_DEFAULT_RESET_SLEEP 250
+#define CS9711_DRAIN_TIMEOUT 50
+#define CS9711_MAX_DRAIN_READS 4
 
 #define CS9711_SEND_ENDPOINT 0x01
 #define CS9711_RECEIVE_ENDPOINT 0x81
@@ -152,8 +154,40 @@ m_init_read_cb_check_expected (FpiUsbTransfer *transfer,
     }
 }
 
+/* Read until the sensor has nothing left to send. Data can be left behind by
+ * a SCAN or a reply whose read was cut off (a crashed or killed process, or a
+ * cancelled operation); it would otherwise arrive as the INIT response and
+ * fail activation, and while it is unread the sensor was seen to refuse
+ * commands, RESET included. */
+static void
+m_init_drain_cb (FpiUsbTransfer *transfer,
+                 FpDevice       *dev,
+                 gpointer        user_data,
+                 GError         *error)
+{
+  FpDeviceCs9711 *self = FPI_DEVICE_CS9711 (dev);
+
+  if (error)
+    {
+      if (!g_error_matches (error, G_USB_DEVICE_ERROR, G_USB_DEVICE_ERROR_TIMED_OUT))
+        fp_warn ("Draining the sensor failed (%s), continuing", error->message);
+      g_clear_error (&error);
+      fpi_ssm_next_state (transfer->ssm);
+      return;
+    }
+
+  fp_dbg ("Drained %lu stale bytes from the sensor", transfer->actual_length);
+  if (++self->drain_reads < CS9711_MAX_DRAIN_READS)
+    fpi_ssm_jump_to_state (transfer->ssm, fpi_ssm_get_cur_state (transfer->ssm));
+  else
+    fpi_ssm_next_state (transfer->ssm);
+}
+
 enum {
-  M_INIT_STATE_SEND_INI_QUERY = 0,
+  M_INIT_STATE_FLUSH_DRAIN = 0,
+  M_INIT_STATE_FLUSH_RESET,
+  M_INIT_STATE_FLUSH_DRAIN_AGAIN,
+  M_INIT_STATE_SEND_INI_QUERY,
   M_INIT_STATE_RECOVER_READ_IGNORED,
   M_INIT_STATE_RECOVER_SEND_RESET,
   M_INIT_STATE_RECOVER_READ_IGNORED_RESET,
@@ -171,6 +205,20 @@ m_init_state (FpiSsm *ssm, FpDevice *_dev)
 
   switch (fpi_ssm_get_cur_state (ssm))
     {
+    /* Empty the sensor, RESET it (which ends a SCAN left waiting for a
+     * finger), and empty it again. */
+    case M_INIT_STATE_FLUSH_DRAIN:
+    case M_INIT_STATE_FLUSH_DRAIN_AGAIN:
+      usb_read_in (_dev, ssm, CS9711_FP_RECV_LEN_MAX, FALSE, CS9711_DRAIN_TIMEOUT, m_init_drain_cb, NULL);
+      break;
+
+    case M_INIT_STATE_FLUSH_RESET:
+      usb_send_out_sync (_dev, CS9711_FP_CMD_TYPE_RESET, &error);
+      g_clear_error (&error);
+      self->drain_reads = 0;
+      fpi_ssm_next_state (ssm);
+      break;
+
     case M_INIT_STATE_SEND_INI_QUERY:
       usb_send_out_sync (_dev, CS9711_FP_CMD_TYPE_INIT, &error);
       if (error)
@@ -214,7 +262,7 @@ m_init_state (FpiSsm *ssm, FpDevice *_dev)
       break;
 
     case M_INIT_STATE_RECEIVE_STATUS:
-      usb_read_in (_dev, ssm, CS9711_FP_CMD_LEN_1, TRUE, CS9711_DEFAULT_WAIT_TIMEOUT, m_init_read_cb_check_expected, NULL);
+      usb_read_in (_dev, ssm, CS9711_FP_RECV_LEN_MAX, FALSE, CS9711_DEFAULT_WAIT_TIMEOUT, m_init_read_cb_check_expected, NULL);
       break;
 
     default:
@@ -399,7 +447,10 @@ m_scan_state (FpiSsm *ssm, FpDevice *_dev)
 static void
 dev_activate (FpImageDevice *dev)
 {
+  FpDeviceCs9711 *self = FPI_DEVICE_CS9711 (dev);
   FpiSsm *ssm;
+
+  self->drain_reads = 0;
 
   /* Start init ssm */
   ssm = fpi_ssm_new (FP_DEVICE (dev), m_init_state, M_INIT_STATE_COUNT);
