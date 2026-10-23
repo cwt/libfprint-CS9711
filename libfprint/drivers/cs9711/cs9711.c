@@ -138,16 +138,13 @@ m_init_read_cb_check_expected (FpiUsbTransfer *transfer,
     }
   else
     {
-      fp_dbg ("Read %lu of requested %lu", transfer->length, transfer->actual_length);
+      fp_dbg ("Read %lu of requested %lu", transfer->actual_length, transfer->length);
       if (transfer->actual_length != CS9711_FP_CMD_LEN_1)
         fp_warn ("Error; expected %lu bytes but got %lu, continuing", (gsize)CS9711_FP_CMD_LEN_1, transfer->actual_length);
-      else if (memcmp (transfer->buffer, expected, CS9711_FP_CMD_LEN_1)) {
-        if (!user_data_is_ignore_mismatch_if_non_null) {
-          fp_warn ("Error; got different state response than expected, but don't understand it anyway, continuing");
-        }
-      }
-      else
+      else if (memcmp (transfer->buffer, expected, CS9711_FP_CMD_LEN_1) == 0)
         fp_dbg ("Init response valid");
+      else if (!user_data_is_ignore_mismatch_if_non_null)
+        fp_warn ("Error; got different state response than expected, but don't understand it anyway, continuing");
       fpi_ssm_next_state(transfer->ssm);
     }
 }
