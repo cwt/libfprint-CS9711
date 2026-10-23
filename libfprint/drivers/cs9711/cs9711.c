@@ -178,9 +178,14 @@ m_init_state (FpiSsm *ssm, FpDevice *_dev)
           fp_dbg ("Error details: '%s', quark: %u code: %d", error->message, error->domain, error->code);
           // if (g_error_matches (error, G_USB_DEVICE_ERROR, G_USB_DEVICE_ERROR_TIMED_OUT))
           if (g_error_matches (error, G_USB_DEVICE_ERROR, G_USB_DEVICE_ERROR_TIMED_OUT))
-            fpi_ssm_next_state (ssm);
+            {
+              g_clear_error (&error);
+              fpi_ssm_next_state (ssm);
+            }
           else
-            fpi_ssm_mark_failed (ssm, error);
+            {
+              fpi_ssm_mark_failed (ssm, error);
+            }
         }
       else
         {
