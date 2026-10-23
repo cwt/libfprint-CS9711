@@ -651,3 +651,19 @@ A timeout of `0` means "use default" in libfprint. Should use `CS9711_DEFAULT_WA
 | High | 2 | N-4 (race condition), N-6 (dead parameter) |
 | Medium | 3 | N-7 (NULL callback), N-8 (error propagation), N-9 (redundant checks) |
 | Low | 3 | N-10 (enroll stages), N-11 (typo), N-12 (timeout) |
+
+## Status after the press-loop changes (October 2026)
+
+| Bug # | Status | Change |
+|-------|--------|--------|
+| **N-1** | ✅ Fixed | Reads take a cancellable that deactivation cancels; deactivation completes when the press loop has ended (cs9711: capture once per finger placement) |
+| **N-2** | ✅ Fixed | The press loop is stored in `loop_ssm` |
+| **N-3** | ✅ Fixed | `m_scan_read_cb_bulk` is gone; the loop's callbacks check `deactivating`, and deactivation completes only after the pending read has returned |
+| **N-4** | ✅ Fixed | The scan state machine is gone; SCAN is sent before its read, and no delayed state change is pending while a transfer is |
+| **N-7** | ✅ Fixed | `m_loop_complete` reports errors and completes deactivation |
+| **N-8** | ✅ Fixed | `usb_send_out_sync` logs at debug level and leaves the error to the caller (cs9711: leave command errors to the caller) |
+| **N-12** | ✅ Addressed | A timeout of 0 is passed to libusb, where it means no limit; waiting for a touch relies on that, the read is cancellable, and the code says so. Every later scan in a press has a 300 ms timeout |
+| 4 | ✅ Fixed | See N-4 |
+| 8 | ✅ Addressed | See N-12 |
+
+N-6, N-9, N-10 and N-11 are unchanged.
