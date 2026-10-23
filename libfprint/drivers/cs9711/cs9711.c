@@ -31,24 +31,24 @@ G_DEFINE_TYPE (FpDeviceCs9711, fpi_device_cs9711, FP_TYPE_IMAGE_DEVICE)
 #define CS9711_SENSOR_HEIGHT 236
 
 #define CS9711_DEFAULT_WAIT_TIMEOUT 300
-#define CS9711_DEFAULT_RESET_SLEEP  250
+#define CS9711_DEFAULT_RESET_SLEEP 250
 
-#define CS9711_SEND_ENDPOINT    0x01
+#define CS9711_SEND_ENDPOINT 0x01
 #define CS9711_RECEIVE_ENDPOINT 0x81
 
-#define CS9711_FP_CMD_LEN_1    8
-#define CS9711_FP_RECV_LEN_1   8000
-#define CS9711_FP_RECV_LEN_2   24
+#define CS9711_FP_CMD_LEN_1 8
+#define CS9711_FP_RECV_LEN_1 8000
+#define CS9711_FP_RECV_LEN_2 24
 #define CS9711_FP_RECV_LEN_MAX CS9711_FP_RECV_LEN_1
 
-#define CS9711_FP_CMD_TYPE_INIT  1
+#define CS9711_FP_CMD_TYPE_INIT 1
 #define CS9711_FP_CMD_TYPE_RESET 2
-#define CS9711_FP_CMD_TYPE_SCAN  4
+#define CS9711_FP_CMD_TYPE_SCAN 4
 
 #define CS9711_FP_CMD_STATE_RESULT_EXPECTED { 0xea, 0x01, 0x62, 0xa0, 0x00, 0x00, 0xc3, 0xea }
 
 #ifndef MIN
-#define MIN(a,b) (((a)<(b))?(a):(b))
+#define MIN(a, b) (((a) < (b)) ? (a) : (b))
 #endif
 
 
@@ -70,7 +70,7 @@ usb_send_out_sync (FpDevice *dev, guint8 type, GError **error)
 {
   GError *err = NULL;
 
-  guint8 *data = g_malloc0(CS9711_FP_CMD_LEN_1);
+  guint8 *data = g_malloc0 (CS9711_FP_CMD_LEN_1);
 
   data[0] = data[CS9711_FP_CMD_LEN_1 - 1] = 0xEA;
   data[1] = data[CS9711_FP_CMD_LEN_1 - 2] = type;
@@ -87,21 +87,24 @@ usb_send_out_sync (FpDevice *dev, guint8 type, GError **error)
       g_propagate_error (error, err);
     }
   else
-    fp_dbg("Sent command 0x%X", type);
+    {
+      fp_dbg ("Sent command 0x%X", type);
+    }
 }
 
 /** Asynchroneous USB bulk write IN helper */
 static void
-usb_read_in (FpDevice *dev,
-             FpiSsm *ssm,
-             gsize length,
-             gboolean short_is_error,
-             guint timeout_in_ms,
+usb_read_in (FpDevice              *dev,
+             FpiSsm                *ssm,
+             gsize                  length,
+             gboolean               short_is_error,
+             guint                  timeout_in_ms,
              FpiUsbTransferCallback callback,
-             gpointer user_data)
+             gpointer               user_data)
 {
   FpiUsbTransfer *transfer = NULL;
-  fp_dbg("Reading %lu bytes", length);
+
+  fp_dbg ("Reading %lu bytes", length);
   // If the response is larger than the buffer, then the usb helpers
   // error before. The reader doesn't seem to care about requestend
   // length, and occasionally answers out of sequence with an invalid
@@ -109,7 +112,7 @@ usb_read_in (FpDevice *dev,
   // in the callback. For the same reason, cannot use short_is_error
   // facility
   // FIXED: Respect the intended length parameter instead of forcing max length
-  gsize actual_length = MIN(length, CS9711_FP_RECV_LEN_MAX);
+  gsize actual_length = MIN (length, CS9711_FP_RECV_LEN_MAX);
   short_is_error = FALSE;
   transfer = fpi_usb_transfer_new (FP_DEVICE (dev));
   transfer->short_is_error = short_is_error;
@@ -128,24 +131,24 @@ m_init_read_cb_check_expected (FpiUsbTransfer *transfer,
 {
   const guint8 expected[] = CS9711_FP_CMD_STATE_RESULT_EXPECTED;
 
-  g_assert(CS9711_FP_CMD_LEN_1 == sizeof(expected));
-  g_assert(transfer->ssm != NULL);
+  g_assert (CS9711_FP_CMD_LEN_1 == sizeof (expected));
+  g_assert (transfer->ssm != NULL);
 
   if (error)
     {
       fp_err ("Read failed: %s, aborting", error->message);
-      fpi_ssm_mark_failed(transfer->ssm, error);
+      fpi_ssm_mark_failed (transfer->ssm, error);
     }
   else
     {
       fp_dbg ("Read %lu of requested %lu", transfer->actual_length, transfer->length);
       if (transfer->actual_length != CS9711_FP_CMD_LEN_1)
-        fp_warn ("Error; expected %lu bytes but got %lu, continuing", (gsize)CS9711_FP_CMD_LEN_1, transfer->actual_length);
+        fp_warn ("Error; expected %lu bytes but got %lu, continuing", (gsize) CS9711_FP_CMD_LEN_1, transfer->actual_length);
       else if (memcmp (transfer->buffer, expected, CS9711_FP_CMD_LEN_1) == 0)
         fp_dbg ("Init response valid");
       else if (!user_data_is_ignore_mismatch_if_non_null)
         fp_warn ("Error; got different state response than expected, but don't understand it anyway, continuing");
-      fpi_ssm_next_state(transfer->ssm);
+      fpi_ssm_next_state (transfer->ssm);
     }
 }
 
@@ -172,7 +175,7 @@ m_init_state (FpiSsm *ssm, FpDevice *_dev)
       usb_send_out_sync (_dev, CS9711_FP_CMD_TYPE_INIT, &error);
       if (error)
         {
-          fp_dbg("Error details: '%s', quark: %u code: %d", error->message, error->domain, error->code);
+          fp_dbg ("Error details: '%s', quark: %u code: %d", error->message, error->domain, error->code);
           // if (g_error_matches (error, G_USB_DEVICE_ERROR, G_USB_DEVICE_ERROR_TIMED_OUT))
           if (g_error_matches (error, G_USB_DEVICE_ERROR, G_USB_DEVICE_ERROR_TIMED_OUT))
             fpi_ssm_next_state (ssm);
@@ -180,11 +183,13 @@ m_init_state (FpiSsm *ssm, FpDevice *_dev)
             fpi_ssm_mark_failed (ssm, error);
         }
       else
-        fpi_ssm_jump_to_state (ssm, M_INIT_STATE_RECEIVE_STATUS);
+        {
+          fpi_ssm_jump_to_state (ssm, M_INIT_STATE_RECEIVE_STATUS);
+        }
       break;
 
     case M_INIT_STATE_RECOVER_READ_IGNORED:
-      fp_warn("Send operation had a timeout. Switching to reset procedure. Ignore next message about the result not matching the expected data.");
+      fp_warn ("Send operation had a timeout. Switching to reset procedure. Ignore next message about the result not matching the expected data.");
       usb_read_in (_dev, ssm, CS9711_FP_CMD_LEN_1, FALSE, CS9711_DEFAULT_WAIT_TIMEOUT, m_init_read_cb_check_expected, NULL);
       break;
 
@@ -194,7 +199,7 @@ m_init_state (FpiSsm *ssm, FpDevice *_dev)
       break;
 
     case M_INIT_STATE_RECOVER_READ_IGNORED_RESET:
-      fp_warn("Send operation had a timeout. Switching to reset procedure.");
+      fp_warn ("Send operation had a timeout. Switching to reset procedure.");
       usb_read_in (_dev, ssm, CS9711_FP_CMD_LEN_1, FALSE, CS9711_DEFAULT_WAIT_TIMEOUT, m_init_read_cb_check_expected, self);
       break;
 
@@ -235,8 +240,8 @@ enum {
   M_SCAN_STATE_COUNT,
 };
 
-static const gpointer M_SCAN_READ_CB_BULK_UD_FIRST_BLOCK = (gpointer)1;
-static const gpointer M_SCAN_READ_CB_BULK_UD_SECOND_BLOCK = (gpointer)2;
+static const gpointer M_SCAN_READ_CB_BULK_UD_FIRST_BLOCK = (gpointer) 1;
+static const gpointer M_SCAN_READ_CB_BULK_UD_SECOND_BLOCK = (gpointer) 2;
 
 /* Read into FpDeviceCs9711->image_buffer if one of the two expected chunk sizes */
 static void
@@ -252,10 +257,10 @@ m_scan_read_cb_bulk (FpiUsbTransfer *transfer,
   gsize expected_size = 0;
   gpointer offset = NULL;
 
-  g_assert (FALSE
-    || user_data == M_SCAN_READ_CB_BULK_UD_FIRST_BLOCK
-    || user_data == M_SCAN_READ_CB_BULK_UD_SECOND_BLOCK
-  );
+  g_assert (FALSE ||
+            user_data == M_SCAN_READ_CB_BULK_UD_FIRST_BLOCK ||
+            user_data == M_SCAN_READ_CB_BULK_UD_SECOND_BLOCK
+           );
 
   if (user_data == M_SCAN_READ_CB_BULK_UD_FIRST_BLOCK)
     {
@@ -268,7 +273,9 @@ m_scan_read_cb_bulk (FpiUsbTransfer *transfer,
       offset = self->image_buffer + CS9711_FP_RECV_LEN_1;
     }
   else
-    g_assert_not_reached ();
+    {
+      g_assert_not_reached ();
+    }
 
   if (error)
     {
@@ -279,14 +286,15 @@ m_scan_read_cb_bulk (FpiUsbTransfer *transfer,
     {
       if (transfer->actual_length != expected_size)
         {
-          fp_dbg("\tSkipping buffer print - got %lu bytes, expected %lu", transfer->actual_length, expected_size);
+          fp_dbg ("\tSkipping buffer print - got %lu bytes, expected %lu", transfer->actual_length, expected_size);
           error = g_error_new (FP_DEVICE_ERROR, FP_DEVICE_ERROR_DATA_INVALID, "expected %lu bytes but got %lu, can't continue", expected_size, transfer->actual_length);
           fpi_ssm_mark_failed (transfer->ssm, error);
         }
-      else {
-        memcpy (offset, transfer->buffer, expected_size);
-        fpi_ssm_next_state (transfer->ssm);
-      }
+      else
+        {
+          memcpy (offset, transfer->buffer, expected_size);
+          fpi_ssm_next_state (transfer->ssm);
+        }
     }
 }
 
@@ -298,25 +306,26 @@ m_scan_submit_image (FpiSsm        *ssm,
   FpImage *img;
 
   img = fp_image_new (CS9711_WIDTH, CS9711_HEIGHT);
-  if (img == NULL) {
-    fpi_ssm_mark_failed (ssm, g_error_new (FP_DEVICE_ERROR,
-                                            FP_DEVICE_ERROR_GENERAL,
-                                            "Failed to allocate image"));
-    return 1;
-  }
+  if (img == NULL)
+    {
+      fpi_ssm_mark_failed (ssm, g_error_new (FP_DEVICE_ERROR,
+                                             FP_DEVICE_ERROR_GENERAL,
+                                             "Failed to allocate image"));
+      return 1;
+    }
 
   for (gsize y = 0; y < CS9711_SENSOR_HEIGHT; y++)
-    for (gsize x = 0; x < CS9711_SENSOR_WIDTH; x++) {
-      gsize dy = y / 2;
-      gsize dx = x * 2 + y % 2;
+    for (gsize x = 0; x < CS9711_SENSOR_WIDTH; x++)
+      {
+        gsize dy = y / 2;
+        gsize dx = x * 2 + y % 2;
 
-      // Bounds checking to prevent buffer overflow
-      if (dy < CS9711_HEIGHT && dx < CS9711_WIDTH &&
-          (y * CS9711_SENSOR_WIDTH + x) < CS9711_FRAME_SIZE &&
-          (dy * CS9711_WIDTH + dx) < (CS9711_WIDTH * CS9711_HEIGHT)) {
-        img->data[dy * CS9711_WIDTH + dx] = self->image_buffer[y * CS9711_SENSOR_WIDTH + x];
+        // Bounds checking to prevent buffer overflow
+        if (dy < CS9711_HEIGHT && dx < CS9711_WIDTH &&
+            (y * CS9711_SENSOR_WIDTH + x) < CS9711_FRAME_SIZE &&
+            (dy * CS9711_WIDTH + dx) < (CS9711_WIDTH * CS9711_HEIGHT))
+          img->data[dy * CS9711_WIDTH + dx] = self->image_buffer[y * CS9711_SENSOR_WIDTH + x];
       }
-    }
 
   img->flags = FPI_IMAGE_PARTIAL;
 
@@ -367,10 +376,9 @@ m_scan_state (FpiSsm *ssm, FpDevice *_dev)
 
     case M_SCAN_IMAGE_COMPLETE:
       /* Check if image allocation failed */
-      if (m_scan_submit_image (ssm, image_device) != 0) {
+      if (m_scan_submit_image (ssm, image_device) != 0)
         /* Image allocation failed, ssm already marked failed in function */
         return;
-      }
       fpi_image_device_report_finger_status (image_device, FALSE);
       fpi_ssm_mark_completed (ssm);
       break;
@@ -423,7 +431,7 @@ dev_open (FpImageDevice *dev)
   g_usb_device_claim_interface (fpi_device_get_usb_device (FP_DEVICE (dev)), 0, 0, &error);
 
   /* Initialize private structure */
-  memset(self->image_buffer, 0, CS9711_FRAME_SIZE);
+  memset (self->image_buffer, 0, CS9711_FRAME_SIZE);
 
   /* Notify open complete */
   fpi_image_device_open_complete (dev, error);
@@ -461,12 +469,13 @@ fpi_device_cs9711_class_init (FpDeviceCs9711Class *klass)
   FpImageDeviceClass *img_class = FP_IMAGE_DEVICE_CLASS (klass);
 
   // Replace assertion with proper error handling to avoid crashes
-  if ((CS9711_FRAME_SIZE) != (CS9711_FP_RECV_LEN_1 + CS9711_FP_RECV_LEN_2)) {
-    g_critical("CS9711 frame size mismatch: CS9711_FRAME_SIZE=%d, expected=%d",
-               CS9711_FRAME_SIZE, CS9711_FP_RECV_LEN_1 + CS9711_FP_RECV_LEN_2);
-    // This is a critical configuration error, but we handle it gracefully
-    g_return_if_reached();
-  }
+  if ((CS9711_FRAME_SIZE) != (CS9711_FP_RECV_LEN_1 + CS9711_FP_RECV_LEN_2))
+    {
+      g_critical ("CS9711 frame size mismatch: CS9711_FRAME_SIZE=%d, expected=%d",
+                  CS9711_FRAME_SIZE, CS9711_FP_RECV_LEN_1 + CS9711_FP_RECV_LEN_2);
+      // This is a critical configuration error, but we handle it gracefully
+      g_return_if_reached ();
+    }
 
   dev_class->id = "cs9711";
   dev_class->full_name = "Chipsailing CS9711Fingprint";
