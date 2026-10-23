@@ -85,7 +85,7 @@ usb_send_out_sync (FpDevice *dev, guint8 type, GError **error)
   fpi_usb_transfer_submit_sync (transfer, CS9711_DEFAULT_WAIT_TIMEOUT, &err);
   if (err)
     {
-      g_warning ("Error while sending command 0x%X, continuing anyway: %s", type, err->message);
+      fp_dbg ("Error while sending command 0x%X: %s", type, err->message);
       g_propagate_error (error, err);
     }
   else
