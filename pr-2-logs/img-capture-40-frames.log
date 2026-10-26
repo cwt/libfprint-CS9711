@@ -1,0 +1,580 @@
+(process:15753): libfprint-context-DEBUG: 10:49:55.430: Initializing FpContext (libfprint version 1.94.6)
+(process:15753): libfprint-context-DEBUG: 10:49:55.436: No driver found for USB device 1D6B:0003
+(process:15753): libfprint-context-DEBUG: 10:49:55.436: No driver found for USB device 0C45:6D1A
+(process:15753): libfprint-context-DEBUG: 10:49:55.436: No driver found for USB device 096E:0853
+(process:15753): libfprint-context-DEBUG: 10:49:55.436: No driver found for USB device 8087:0026
+(process:15753): libfprint-context-DEBUG: 10:49:55.436: No driver found for USB device 058F:6362
+(process:15753): libfprint-context-DEBUG: 10:49:55.436: No driver found for USB device 25A7:FA11
+(process:15753): libfprint-context-DEBUG: 10:49:55.436: No driver found for USB device 1EA7:0169
+(process:15753): libfprint-context-DEBUG: 10:49:55.436: No driver found for USB device 1A40:0101
+(process:15753): libfprint-context-DEBUG: 10:49:55.436: No driver found for USB device 1D6B:0002
+(process:15753): libfprint-context-DEBUG: 10:49:55.436: No driver found for USB device 0B95:1790
+(process:15753): libfprint-context-DEBUG: 10:49:55.436: No driver found for USB device 1D6B:0003
+(process:15753): libfprint-context-DEBUG: 10:49:55.436: No driver found for USB device 1D6B:0002
+(process:15753): libfprint-device-DEBUG: 10:49:55.439: Device reported probe completion
+(process:15753): libfprint-device-DEBUG: 10:49:55.439: Completing action FPI_DEVICE_ACTION_PROBE in idle!
+(process:15753): libfprint-device-DEBUG: 10:49:55.439: Updated temperature model after 0.00 seconds, ratio 0.27 -> 0.27, active 0 -> 0, FP_TEMPERATURE_COLD -> FP_TEMPERATURE_COLD
+Selected device 0 (Chipsailing CS9711Fingprint) claimed by cs9711 driver
+(process:15753): libfprint-image_device-DEBUG: 10:49:55.537: Image device open completed
+(process:15753): libfprint-device-DEBUG: 10:49:55.537: Device reported open completion
+(process:15753): libfprint-device-DEBUG: 10:49:55.537: Completing action FPI_DEVICE_ACTION_OPEN in idle!
+(process:15753): libfprint-device-DEBUG: 10:49:55.537: Updated temperature model after 0.10 seconds, ratio 0.27 -> 0.27, active 0 -> 0, FP_TEMPERATURE_COLD -> FP_TEMPERATURE_COLD
+Opened device. (process:15753): libfprint-device-DEBUG: 10:49:55.537: Updated temperature model after 0.00 seconds, ratio 0.27 -> 0.27, active 1 -> 1, FP_TEMPERATURE_COLD -> FP_TEMPERATURE_COLD
+(process:15753): libfprint-image_device-DEBUG: 10:49:55.537: Activating image device
+(process:15753): libfprint-image_device-DEBUG: 10:49:55.537: Image device internal state change from FPI_IMAGE_DEVICE_STATE_INACTIVE to FPI_IMAGE_DEVICE_STATE_ACTIVATING
+(process:15753): libfprint-SSM-DEBUG: 10:49:55.537: [cs9711] M_INIT_STATE_COUNT entering state 0
+(process:15753): libfprint-cs9711-DEBUG: 10:49:55.537: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:49:55.588: [cs9711] M_INIT_STATE_COUNT entering state 1
+(process:15753): libfprint-cs9711-DEBUG: 10:49:55.588: Sent command 0x2
+(process:15753): libfprint-SSM-DEBUG: 10:49:55.588: [cs9711] M_INIT_STATE_COUNT entering state 2
+(process:15753): libfprint-cs9711-DEBUG: 10:49:55.588: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:49:55.639: [cs9711] M_INIT_STATE_COUNT entering state 3
+(process:15753): libfprint-cs9711-DEBUG: 10:49:55.639: Sent command 0x1
+(process:15753): libfprint-SSM-DEBUG: 10:49:55.639: [cs9711] M_INIT_STATE_COUNT entering state 8
+(process:15753): libfprint-cs9711-DEBUG: 10:49:55.639: Reading 8000 bytes
+(process:15753): libfprint-device-DEBUG: 10:49:55.649: Updated temperature model after 0.11 seconds, ratio 0.27 -> 0.27, active 1 -> 1, FP_TEMPERATURE_COLD -> FP_TEMPERATURE_WARM
+(process:15753): libfprint-cs9711-DEBUG: 10:49:55.670: Read 8 of requested 8000
+(process:15753): libfprint-cs9711-DEBUG: 10:49:55.670: Init response valid
+(process:15753): libfprint-SSM-DEBUG: 10:49:55.670: [cs9711] M_INIT_STATE_COUNT completed successfully
+(process:15753): libfprint-image_device-DEBUG: 10:49:55.670: Image device activation completed
+(process:15753): libfprint-image_device-DEBUG: 10:49:55.670: Image device internal state change from FPI_IMAGE_DEVICE_STATE_ACTIVATING to FPI_IMAGE_DEVICE_STATE_IDLE
+(process:15753): libfprint-image_device-DEBUG: 10:49:55.670: Image device internal state change from FPI_IMAGE_DEVICE_STATE_IDLE to FPI_IMAGE_DEVICE_STATE_AWAIT_FINGER_ON
+(process:15753): libfprint-SSM-DEBUG: 10:49:55.670: [cs9711] M_LOOP_NUM_STATES entering state 0
+(process:15753): libfprint-SSM-DEBUG: 10:49:55.670: [cs9711] M_LOOP_NUM_STATES entering state 2
+(process:15753): libfprint-device-DEBUG: 10:49:55.670: Device reported finger status change: FP_FINGER_STATUS_NEEDED
+(process:15753): libfprint-SSM-DEBUG: 10:49:55.920: [cs9711] M_LOOP_NUM_STATES entering state 3
+(process:15753): libfprint-cs9711-DEBUG: 10:49:55.921: Sent command 0x4
+(process:15753): libfprint-cs9711-DEBUG: 10:49:55.921: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:17.621: [cs9711] M_LOOP_NUM_STATES entering state 4
+(process:15753): libfprint-cs9711-DEBUG: 10:50:17.621: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:17.621: [cs9711] M_LOOP_NUM_STATES entering state 5
+(process:15753): libfprint-cs9711-DEBUG: 10:50:17.621: Sent command 0x2
+(process:15753): libfprint-device-DEBUG: 10:50:17.621: Device reported finger status change: FP_FINGER_STATUS_NEEDED | FP_FINGER_STATUS_PRESENT
+(process:15753): libfprint-image_device-DEBUG: 10:50:17.621: Image device reported finger status: on
+(process:15753): libfprint-image_device-DEBUG: 10:50:17.621: Image device internal state change from FPI_IMAGE_DEVICE_STATE_AWAIT_FINGER_ON to FPI_IMAGE_DEVICE_STATE_CAPTURE
+(process:15753): libfprint-SSM-DEBUG: 10:50:17.621: [cs9711] M_LOOP_NUM_STATES entering state 0
+(process:15753): libfprint-cs9711-DEBUG: 10:50:17.621: Sent command 0x1
+(process:15753): libfprint-SSM-DEBUG: 10:50:17.621: [cs9711] M_LOOP_NUM_STATES entering state 1
+(process:15753): libfprint-cs9711-DEBUG: 10:50:17.621: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:17.659: [cs9711] M_LOOP_NUM_STATES entering state 2
+(process:15753): libfprint-SSM-DEBUG: 10:50:17.909: [cs9711] M_LOOP_NUM_STATES entering state 3
+(process:15753): libfprint-cs9711-DEBUG: 10:50:17.910: Sent command 0x4
+(process:15753): libfprint-cs9711-DEBUG: 10:50:17.910: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:17.978: [cs9711] M_LOOP_NUM_STATES entering state 4
+(process:15753): libfprint-cs9711-DEBUG: 10:50:17.978: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:17.978: [cs9711] M_LOOP_NUM_STATES entering state 5
+(process:15753): libfprint-cs9711-DEBUG: 10:50:17.978: Sent command 0x2
+(process:15753): libfprint-cs9711-DEBUG: 10:50:17.978: Frame 2 of this press differs from the last by 16.9
+(process:15753): libfprint-SSM-DEBUG: 10:50:17.978: [cs9711] M_LOOP_NUM_STATES entering state 0
+(process:15753): libfprint-cs9711-DEBUG: 10:50:17.986: Sent command 0x1
+(process:15753): libfprint-SSM-DEBUG: 10:50:17.986: [cs9711] M_LOOP_NUM_STATES entering state 1
+(process:15753): libfprint-cs9711-DEBUG: 10:50:17.986: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:18.016: [cs9711] M_LOOP_NUM_STATES entering state 2
+(process:15753): libfprint-SSM-DEBUG: 10:50:18.267: [cs9711] M_LOOP_NUM_STATES entering state 3
+(process:15753): libfprint-cs9711-DEBUG: 10:50:18.267: Sent command 0x4
+(process:15753): libfprint-cs9711-DEBUG: 10:50:18.267: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:18.335: [cs9711] M_LOOP_NUM_STATES entering state 4
+(process:15753): libfprint-cs9711-DEBUG: 10:50:18.335: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:18.335: [cs9711] M_LOOP_NUM_STATES entering state 5
+(process:15753): libfprint-cs9711-DEBUG: 10:50:18.335: Sent command 0x2
+(process:15753): libfprint-cs9711-DEBUG: 10:50:18.335: Frame 3 of this press differs from the last by 10.1
+(process:15753): libfprint-SSM-DEBUG: 10:50:18.335: [cs9711] M_LOOP_NUM_STATES entering state 0
+(process:15753): libfprint-cs9711-DEBUG: 10:50:18.336: Sent command 0x1
+(process:15753): libfprint-SSM-DEBUG: 10:50:18.336: [cs9711] M_LOOP_NUM_STATES entering state 1
+(process:15753): libfprint-cs9711-DEBUG: 10:50:18.336: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:18.373: [cs9711] M_LOOP_NUM_STATES entering state 2
+(process:15753): libfprint-SSM-DEBUG: 10:50:18.624: [cs9711] M_LOOP_NUM_STATES entering state 3
+(process:15753): libfprint-cs9711-DEBUG: 10:50:18.624: Sent command 0x4
+(process:15753): libfprint-cs9711-DEBUG: 10:50:18.624: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:18.693: [cs9711] M_LOOP_NUM_STATES entering state 4
+(process:15753): libfprint-cs9711-DEBUG: 10:50:18.693: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:18.693: [cs9711] M_LOOP_NUM_STATES entering state 5
+(process:15753): libfprint-cs9711-DEBUG: 10:50:18.693: Sent command 0x2
+(process:15753): libfprint-cs9711-DEBUG: 10:50:18.693: Frame 4 of this press differs from the last by 9.6
+(process:15753): libfprint-SSM-DEBUG: 10:50:18.693: [cs9711] M_LOOP_NUM_STATES entering state 0
+(process:15753): libfprint-cs9711-DEBUG: 10:50:18.693: Sent command 0x1
+(process:15753): libfprint-SSM-DEBUG: 10:50:18.693: [cs9711] M_LOOP_NUM_STATES entering state 1
+(process:15753): libfprint-cs9711-DEBUG: 10:50:18.693: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:18.731: [cs9711] M_LOOP_NUM_STATES entering state 2
+(process:15753): libfprint-SSM-DEBUG: 10:50:18.981: [cs9711] M_LOOP_NUM_STATES entering state 3
+(process:15753): libfprint-cs9711-DEBUG: 10:50:18.982: Sent command 0x4
+(process:15753): libfprint-cs9711-DEBUG: 10:50:18.982: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:19.050: [cs9711] M_LOOP_NUM_STATES entering state 4
+(process:15753): libfprint-cs9711-DEBUG: 10:50:19.050: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:19.050: [cs9711] M_LOOP_NUM_STATES entering state 5
+(process:15753): libfprint-cs9711-DEBUG: 10:50:19.050: Sent command 0x2
+(process:15753): libfprint-cs9711-DEBUG: 10:50:19.050: Frame 5 of this press differs from the last by 10.3
+(process:15753): libfprint-SSM-DEBUG: 10:50:19.050: [cs9711] M_LOOP_NUM_STATES entering state 0
+(process:15753): libfprint-cs9711-DEBUG: 10:50:19.050: Sent command 0x1
+(process:15753): libfprint-SSM-DEBUG: 10:50:19.050: [cs9711] M_LOOP_NUM_STATES entering state 1
+(process:15753): libfprint-cs9711-DEBUG: 10:50:19.050: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:19.088: [cs9711] M_LOOP_NUM_STATES entering state 2
+(process:15753): libfprint-SSM-DEBUG: 10:50:19.338: [cs9711] M_LOOP_NUM_STATES entering state 3
+(process:15753): libfprint-cs9711-DEBUG: 10:50:19.339: Sent command 0x4
+(process:15753): libfprint-cs9711-DEBUG: 10:50:19.339: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:19.407: [cs9711] M_LOOP_NUM_STATES entering state 4
+(process:15753): libfprint-cs9711-DEBUG: 10:50:19.407: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:19.407: [cs9711] M_LOOP_NUM_STATES entering state 5
+(process:15753): libfprint-cs9711-DEBUG: 10:50:19.407: Sent command 0x2
+(process:15753): libfprint-cs9711-DEBUG: 10:50:19.408: Frame 6 of this press differs from the last by 10.7
+(process:15753): libfprint-SSM-DEBUG: 10:50:19.408: [cs9711] M_LOOP_NUM_STATES entering state 0
+(process:15753): libfprint-cs9711-DEBUG: 10:50:19.408: Sent command 0x1
+(process:15753): libfprint-SSM-DEBUG: 10:50:19.408: [cs9711] M_LOOP_NUM_STATES entering state 1
+(process:15753): libfprint-cs9711-DEBUG: 10:50:19.408: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:19.445: [cs9711] M_LOOP_NUM_STATES entering state 2
+(process:15753): libfprint-SSM-DEBUG: 10:50:19.696: [cs9711] M_LOOP_NUM_STATES entering state 3
+(process:15753): libfprint-cs9711-DEBUG: 10:50:19.696: Sent command 0x4
+(process:15753): libfprint-cs9711-DEBUG: 10:50:19.696: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:19.764: [cs9711] M_LOOP_NUM_STATES entering state 4
+(process:15753): libfprint-cs9711-DEBUG: 10:50:19.764: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:19.765: [cs9711] M_LOOP_NUM_STATES entering state 5
+(process:15753): libfprint-cs9711-DEBUG: 10:50:19.765: Sent command 0x2
+(process:15753): libfprint-cs9711-DEBUG: 10:50:19.765: Frame 7 of this press differs from the last by 10.8
+(process:15753): libfprint-SSM-DEBUG: 10:50:19.765: [cs9711] M_LOOP_NUM_STATES entering state 0
+(process:15753): libfprint-cs9711-DEBUG: 10:50:19.772: Sent command 0x1
+(process:15753): libfprint-SSM-DEBUG: 10:50:19.772: [cs9711] M_LOOP_NUM_STATES entering state 1
+(process:15753): libfprint-cs9711-DEBUG: 10:50:19.772: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:19.803: [cs9711] M_LOOP_NUM_STATES entering state 2
+(process:15753): libfprint-SSM-DEBUG: 10:50:20.053: [cs9711] M_LOOP_NUM_STATES entering state 3
+(process:15753): libfprint-cs9711-DEBUG: 10:50:20.054: Sent command 0x4
+(process:15753): libfprint-cs9711-DEBUG: 10:50:20.054: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:20.122: [cs9711] M_LOOP_NUM_STATES entering state 4
+(process:15753): libfprint-cs9711-DEBUG: 10:50:20.122: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:20.123: [cs9711] M_LOOP_NUM_STATES entering state 5
+(process:15753): libfprint-cs9711-DEBUG: 10:50:20.123: Sent command 0x2
+(process:15753): libfprint-cs9711-DEBUG: 10:50:20.123: Frame 8 of this press differs from the last by 9.9
+(process:15753): libfprint-SSM-DEBUG: 10:50:20.123: [cs9711] M_LOOP_NUM_STATES entering state 0
+(process:15753): libfprint-cs9711-DEBUG: 10:50:20.130: Sent command 0x1
+(process:15753): libfprint-SSM-DEBUG: 10:50:20.130: [cs9711] M_LOOP_NUM_STATES entering state 1
+(process:15753): libfprint-cs9711-DEBUG: 10:50:20.130: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:20.161: [cs9711] M_LOOP_NUM_STATES entering state 2
+(process:15753): libfprint-SSM-DEBUG: 10:50:20.412: [cs9711] M_LOOP_NUM_STATES entering state 3
+(process:15753): libfprint-cs9711-DEBUG: 10:50:20.412: Sent command 0x4
+(process:15753): libfprint-cs9711-DEBUG: 10:50:20.412: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:20.480: [cs9711] M_LOOP_NUM_STATES entering state 4
+(process:15753): libfprint-cs9711-DEBUG: 10:50:20.480: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:20.481: [cs9711] M_LOOP_NUM_STATES entering state 5
+(process:15753): libfprint-cs9711-DEBUG: 10:50:20.481: Sent command 0x2
+(process:15753): libfprint-cs9711-DEBUG: 10:50:20.481: Frame 9 of this press differs from the last by 8.8
+(process:15753): libfprint-SSM-DEBUG: 10:50:20.481: [cs9711] M_LOOP_NUM_STATES entering state 0
+(process:15753): libfprint-cs9711-DEBUG: 10:50:20.481: Sent command 0x1
+(process:15753): libfprint-SSM-DEBUG: 10:50:20.481: [cs9711] M_LOOP_NUM_STATES entering state 1
+(process:15753): libfprint-cs9711-DEBUG: 10:50:20.481: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:20.519: [cs9711] M_LOOP_NUM_STATES entering state 2
+(process:15753): libfprint-SSM-DEBUG: 10:50:20.769: [cs9711] M_LOOP_NUM_STATES entering state 3
+(process:15753): libfprint-cs9711-DEBUG: 10:50:20.769: Sent command 0x4
+(process:15753): libfprint-cs9711-DEBUG: 10:50:20.769: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:20.838: [cs9711] M_LOOP_NUM_STATES entering state 4
+(process:15753): libfprint-cs9711-DEBUG: 10:50:20.838: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:20.838: [cs9711] M_LOOP_NUM_STATES entering state 5
+(process:15753): libfprint-cs9711-DEBUG: 10:50:20.838: Sent command 0x2
+(process:15753): libfprint-cs9711-DEBUG: 10:50:20.838: Frame 10 of this press differs from the last by 11.2
+(process:15753): libfprint-SSM-DEBUG: 10:50:20.838: [cs9711] M_LOOP_NUM_STATES entering state 0
+(process:15753): libfprint-cs9711-DEBUG: 10:50:20.838: Sent command 0x1
+(process:15753): libfprint-SSM-DEBUG: 10:50:20.838: [cs9711] M_LOOP_NUM_STATES entering state 1
+(process:15753): libfprint-cs9711-DEBUG: 10:50:20.838: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:20.876: [cs9711] M_LOOP_NUM_STATES entering state 2
+(process:15753): libfprint-SSM-DEBUG: 10:50:21.126: [cs9711] M_LOOP_NUM_STATES entering state 3
+(process:15753): libfprint-cs9711-DEBUG: 10:50:21.127: Sent command 0x4
+(process:15753): libfprint-cs9711-DEBUG: 10:50:21.127: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:21.195: [cs9711] M_LOOP_NUM_STATES entering state 4
+(process:15753): libfprint-cs9711-DEBUG: 10:50:21.195: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:21.195: [cs9711] M_LOOP_NUM_STATES entering state 5
+(process:15753): libfprint-cs9711-DEBUG: 10:50:21.196: Sent command 0x2
+(process:15753): libfprint-cs9711-DEBUG: 10:50:21.196: Frame 11 of this press differs from the last by 11.0
+(process:15753): libfprint-SSM-DEBUG: 10:50:21.196: [cs9711] M_LOOP_NUM_STATES entering state 0
+(process:15753): libfprint-cs9711-DEBUG: 10:50:21.196: Sent command 0x1
+(process:15753): libfprint-SSM-DEBUG: 10:50:21.196: [cs9711] M_LOOP_NUM_STATES entering state 1
+(process:15753): libfprint-cs9711-DEBUG: 10:50:21.196: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:21.233: [cs9711] M_LOOP_NUM_STATES entering state 2
+(process:15753): libfprint-SSM-DEBUG: 10:50:21.484: [cs9711] M_LOOP_NUM_STATES entering state 3
+(process:15753): libfprint-cs9711-DEBUG: 10:50:21.484: Sent command 0x4
+(process:15753): libfprint-cs9711-DEBUG: 10:50:21.484: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:21.552: [cs9711] M_LOOP_NUM_STATES entering state 4
+(process:15753): libfprint-cs9711-DEBUG: 10:50:21.552: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:21.552: [cs9711] M_LOOP_NUM_STATES entering state 5
+(process:15753): libfprint-cs9711-DEBUG: 10:50:21.552: Sent command 0x2
+(process:15753): libfprint-cs9711-DEBUG: 10:50:21.552: Frame 12 of this press differs from the last by 10.9
+(process:15753): libfprint-SSM-DEBUG: 10:50:21.552: [cs9711] M_LOOP_NUM_STATES entering state 0
+(process:15753): libfprint-cs9711-DEBUG: 10:50:21.553: Sent command 0x1
+(process:15753): libfprint-SSM-DEBUG: 10:50:21.553: [cs9711] M_LOOP_NUM_STATES entering state 1
+(process:15753): libfprint-cs9711-DEBUG: 10:50:21.553: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:21.590: [cs9711] M_LOOP_NUM_STATES entering state 2
+(process:15753): libfprint-SSM-DEBUG: 10:50:21.841: [cs9711] M_LOOP_NUM_STATES entering state 3
+(process:15753): libfprint-cs9711-DEBUG: 10:50:21.841: Sent command 0x4
+(process:15753): libfprint-cs9711-DEBUG: 10:50:21.841: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:21.909: [cs9711] M_LOOP_NUM_STATES entering state 4
+(process:15753): libfprint-cs9711-DEBUG: 10:50:21.909: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:21.910: [cs9711] M_LOOP_NUM_STATES entering state 5
+(process:15753): libfprint-cs9711-DEBUG: 10:50:21.910: Sent command 0x2
+(process:15753): libfprint-cs9711-DEBUG: 10:50:21.910: Frame 13 of this press differs from the last by 11.6
+(process:15753): libfprint-SSM-DEBUG: 10:50:21.910: [cs9711] M_LOOP_NUM_STATES entering state 0
+(process:15753): libfprint-cs9711-DEBUG: 10:50:21.910: Sent command 0x1
+(process:15753): libfprint-SSM-DEBUG: 10:50:21.910: [cs9711] M_LOOP_NUM_STATES entering state 1
+(process:15753): libfprint-cs9711-DEBUG: 10:50:21.910: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:21.948: [cs9711] M_LOOP_NUM_STATES entering state 2
+(process:15753): libfprint-SSM-DEBUG: 10:50:22.198: [cs9711] M_LOOP_NUM_STATES entering state 3
+(process:15753): libfprint-cs9711-DEBUG: 10:50:22.198: Sent command 0x4
+(process:15753): libfprint-cs9711-DEBUG: 10:50:22.198: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:22.266: [cs9711] M_LOOP_NUM_STATES entering state 4
+(process:15753): libfprint-cs9711-DEBUG: 10:50:22.266: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:22.266: [cs9711] M_LOOP_NUM_STATES entering state 5
+(process:15753): libfprint-cs9711-DEBUG: 10:50:22.266: Sent command 0x2
+(process:15753): libfprint-cs9711-DEBUG: 10:50:22.266: Frame 14 of this press differs from the last by 11.1
+(process:15753): libfprint-SSM-DEBUG: 10:50:22.266: [cs9711] M_LOOP_NUM_STATES entering state 0
+(process:15753): libfprint-cs9711-DEBUG: 10:50:22.267: Sent command 0x1
+(process:15753): libfprint-SSM-DEBUG: 10:50:22.267: [cs9711] M_LOOP_NUM_STATES entering state 1
+(process:15753): libfprint-cs9711-DEBUG: 10:50:22.267: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:22.304: [cs9711] M_LOOP_NUM_STATES entering state 2
+(process:15753): libfprint-SSM-DEBUG: 10:50:22.555: [cs9711] M_LOOP_NUM_STATES entering state 3
+(process:15753): libfprint-cs9711-DEBUG: 10:50:22.555: Sent command 0x4
+(process:15753): libfprint-cs9711-DEBUG: 10:50:22.555: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:22.623: [cs9711] M_LOOP_NUM_STATES entering state 4
+(process:15753): libfprint-cs9711-DEBUG: 10:50:22.623: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:22.624: [cs9711] M_LOOP_NUM_STATES entering state 5
+(process:15753): libfprint-cs9711-DEBUG: 10:50:22.624: Sent command 0x2
+(process:15753): libfprint-cs9711-DEBUG: 10:50:22.624: Frame 15 of this press differs from the last by 11.3
+(process:15753): libfprint-SSM-DEBUG: 10:50:22.624: [cs9711] M_LOOP_NUM_STATES entering state 0
+(process:15753): libfprint-cs9711-DEBUG: 10:50:22.624: Sent command 0x1
+(process:15753): libfprint-SSM-DEBUG: 10:50:22.624: [cs9711] M_LOOP_NUM_STATES entering state 1
+(process:15753): libfprint-cs9711-DEBUG: 10:50:22.624: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:22.662: [cs9711] M_LOOP_NUM_STATES entering state 2
+(process:15753): libfprint-SSM-DEBUG: 10:50:22.912: [cs9711] M_LOOP_NUM_STATES entering state 3
+(process:15753): libfprint-cs9711-DEBUG: 10:50:22.912: Sent command 0x4
+(process:15753): libfprint-cs9711-DEBUG: 10:50:22.912: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:22.981: [cs9711] M_LOOP_NUM_STATES entering state 4
+(process:15753): libfprint-cs9711-DEBUG: 10:50:22.981: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:22.981: [cs9711] M_LOOP_NUM_STATES entering state 5
+(process:15753): libfprint-cs9711-DEBUG: 10:50:22.981: Sent command 0x2
+(process:15753): libfprint-cs9711-DEBUG: 10:50:22.981: Frame 16 of this press differs from the last by 10.6
+(process:15753): libfprint-SSM-DEBUG: 10:50:22.981: [cs9711] M_LOOP_NUM_STATES entering state 0
+(process:15753): libfprint-cs9711-DEBUG: 10:50:22.981: Sent command 0x1
+(process:15753): libfprint-SSM-DEBUG: 10:50:22.981: [cs9711] M_LOOP_NUM_STATES entering state 1
+(process:15753): libfprint-cs9711-DEBUG: 10:50:22.981: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:23.019: [cs9711] M_LOOP_NUM_STATES entering state 2
+(process:15753): libfprint-SSM-DEBUG: 10:50:23.269: [cs9711] M_LOOP_NUM_STATES entering state 3
+(process:15753): libfprint-cs9711-DEBUG: 10:50:23.269: Sent command 0x4
+(process:15753): libfprint-cs9711-DEBUG: 10:50:23.269: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:23.338: [cs9711] M_LOOP_NUM_STATES entering state 4
+(process:15753): libfprint-cs9711-DEBUG: 10:50:23.338: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:23.338: [cs9711] M_LOOP_NUM_STATES entering state 5
+(process:15753): libfprint-cs9711-DEBUG: 10:50:23.338: Sent command 0x2
+(process:15753): libfprint-cs9711-DEBUG: 10:50:23.338: Frame 17 of this press differs from the last by 11.5
+(process:15753): libfprint-SSM-DEBUG: 10:50:23.338: [cs9711] M_LOOP_NUM_STATES entering state 0
+(process:15753): libfprint-cs9711-DEBUG: 10:50:23.338: Sent command 0x1
+(process:15753): libfprint-SSM-DEBUG: 10:50:23.338: [cs9711] M_LOOP_NUM_STATES entering state 1
+(process:15753): libfprint-cs9711-DEBUG: 10:50:23.338: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:23.376: [cs9711] M_LOOP_NUM_STATES entering state 2
+(process:15753): libfprint-SSM-DEBUG: 10:50:23.626: [cs9711] M_LOOP_NUM_STATES entering state 3
+(process:15753): libfprint-cs9711-DEBUG: 10:50:23.626: Sent command 0x4
+(process:15753): libfprint-cs9711-DEBUG: 10:50:23.626: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:23.695: [cs9711] M_LOOP_NUM_STATES entering state 4
+(process:15753): libfprint-cs9711-DEBUG: 10:50:23.695: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:23.695: [cs9711] M_LOOP_NUM_STATES entering state 5
+(process:15753): libfprint-cs9711-DEBUG: 10:50:23.695: Sent command 0x2
+(process:15753): libfprint-cs9711-DEBUG: 10:50:23.695: Frame 18 of this press differs from the last by 12.2
+(process:15753): libfprint-SSM-DEBUG: 10:50:23.695: [cs9711] M_LOOP_NUM_STATES entering state 0
+(process:15753): libfprint-cs9711-DEBUG: 10:50:23.695: Sent command 0x1
+(process:15753): libfprint-SSM-DEBUG: 10:50:23.695: [cs9711] M_LOOP_NUM_STATES entering state 1
+(process:15753): libfprint-cs9711-DEBUG: 10:50:23.695: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:23.733: [cs9711] M_LOOP_NUM_STATES entering state 2
+(process:15753): libfprint-SSM-DEBUG: 10:50:23.983: [cs9711] M_LOOP_NUM_STATES entering state 3
+(process:15753): libfprint-cs9711-DEBUG: 10:50:23.983: Sent command 0x4
+(process:15753): libfprint-cs9711-DEBUG: 10:50:23.983: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:24.051: [cs9711] M_LOOP_NUM_STATES entering state 4
+(process:15753): libfprint-cs9711-DEBUG: 10:50:24.051: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:24.051: [cs9711] M_LOOP_NUM_STATES entering state 5
+(process:15753): libfprint-cs9711-DEBUG: 10:50:24.052: Sent command 0x2
+(process:15753): libfprint-cs9711-DEBUG: 10:50:24.052: Frame 19 of this press differs from the last by 12.8
+(process:15753): libfprint-SSM-DEBUG: 10:50:24.052: [cs9711] M_LOOP_NUM_STATES entering state 0
+(process:15753): libfprint-cs9711-DEBUG: 10:50:24.052: Sent command 0x1
+(process:15753): libfprint-SSM-DEBUG: 10:50:24.052: [cs9711] M_LOOP_NUM_STATES entering state 1
+(process:15753): libfprint-cs9711-DEBUG: 10:50:24.052: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:24.090: [cs9711] M_LOOP_NUM_STATES entering state 2
+(process:15753): libfprint-SSM-DEBUG: 10:50:24.340: [cs9711] M_LOOP_NUM_STATES entering state 3
+(process:15753): libfprint-cs9711-DEBUG: 10:50:24.340: Sent command 0x4
+(process:15753): libfprint-cs9711-DEBUG: 10:50:24.340: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:24.409: [cs9711] M_LOOP_NUM_STATES entering state 4
+(process:15753): libfprint-cs9711-DEBUG: 10:50:24.409: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:24.409: [cs9711] M_LOOP_NUM_STATES entering state 5
+(process:15753): libfprint-cs9711-DEBUG: 10:50:24.409: Sent command 0x2
+(process:15753): libfprint-cs9711-DEBUG: 10:50:24.409: Frame 20 of this press differs from the last by 11.3
+(process:15753): libfprint-SSM-DEBUG: 10:50:24.409: [cs9711] M_LOOP_NUM_STATES entering state 0
+(process:15753): libfprint-cs9711-DEBUG: 10:50:24.409: Sent command 0x1
+(process:15753): libfprint-SSM-DEBUG: 10:50:24.409: [cs9711] M_LOOP_NUM_STATES entering state 1
+(process:15753): libfprint-cs9711-DEBUG: 10:50:24.409: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:24.447: [cs9711] M_LOOP_NUM_STATES entering state 2
+(process:15753): libfprint-SSM-DEBUG: 10:50:24.697: [cs9711] M_LOOP_NUM_STATES entering state 3
+(process:15753): libfprint-cs9711-DEBUG: 10:50:24.697: Sent command 0x4
+(process:15753): libfprint-cs9711-DEBUG: 10:50:24.697: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:24.765: [cs9711] M_LOOP_NUM_STATES entering state 4
+(process:15753): libfprint-cs9711-DEBUG: 10:50:24.765: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:24.766: [cs9711] M_LOOP_NUM_STATES entering state 5
+(process:15753): libfprint-cs9711-DEBUG: 10:50:24.766: Sent command 0x2
+(process:15753): libfprint-cs9711-DEBUG: 10:50:24.766: Frame 21 of this press differs from the last by 10.6
+(process:15753): libfprint-SSM-DEBUG: 10:50:24.766: [cs9711] M_LOOP_NUM_STATES entering state 0
+(process:15753): libfprint-cs9711-DEBUG: 10:50:24.766: Sent command 0x1
+(process:15753): libfprint-SSM-DEBUG: 10:50:24.766: [cs9711] M_LOOP_NUM_STATES entering state 1
+(process:15753): libfprint-cs9711-DEBUG: 10:50:24.766: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:24.803: [cs9711] M_LOOP_NUM_STATES entering state 2
+(process:15753): libfprint-SSM-DEBUG: 10:50:25.054: [cs9711] M_LOOP_NUM_STATES entering state 3
+(process:15753): libfprint-cs9711-DEBUG: 10:50:25.054: Sent command 0x4
+(process:15753): libfprint-cs9711-DEBUG: 10:50:25.054: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:25.122: [cs9711] M_LOOP_NUM_STATES entering state 4
+(process:15753): libfprint-cs9711-DEBUG: 10:50:25.122: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:25.123: [cs9711] M_LOOP_NUM_STATES entering state 5
+(process:15753): libfprint-cs9711-DEBUG: 10:50:25.123: Sent command 0x2
+(process:15753): libfprint-cs9711-DEBUG: 10:50:25.123: Frame 22 of this press differs from the last by 11.8
+(process:15753): libfprint-SSM-DEBUG: 10:50:25.123: [cs9711] M_LOOP_NUM_STATES entering state 0
+(process:15753): libfprint-cs9711-DEBUG: 10:50:25.123: Sent command 0x1
+(process:15753): libfprint-SSM-DEBUG: 10:50:25.123: [cs9711] M_LOOP_NUM_STATES entering state 1
+(process:15753): libfprint-cs9711-DEBUG: 10:50:25.123: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:25.161: [cs9711] M_LOOP_NUM_STATES entering state 2
+(process:15753): libfprint-SSM-DEBUG: 10:50:25.411: [cs9711] M_LOOP_NUM_STATES entering state 3
+(process:15753): libfprint-cs9711-DEBUG: 10:50:25.411: Sent command 0x4
+(process:15753): libfprint-cs9711-DEBUG: 10:50:25.411: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:25.480: [cs9711] M_LOOP_NUM_STATES entering state 4
+(process:15753): libfprint-cs9711-DEBUG: 10:50:25.480: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:25.480: [cs9711] M_LOOP_NUM_STATES entering state 5
+(process:15753): libfprint-cs9711-DEBUG: 10:50:25.480: Sent command 0x2
+(process:15753): libfprint-cs9711-DEBUG: 10:50:25.480: Frame 23 of this press differs from the last by 11.4
+(process:15753): libfprint-SSM-DEBUG: 10:50:25.480: [cs9711] M_LOOP_NUM_STATES entering state 0
+(process:15753): libfprint-cs9711-DEBUG: 10:50:25.480: Sent command 0x1
+(process:15753): libfprint-SSM-DEBUG: 10:50:25.480: [cs9711] M_LOOP_NUM_STATES entering state 1
+(process:15753): libfprint-cs9711-DEBUG: 10:50:25.480: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:25.518: [cs9711] M_LOOP_NUM_STATES entering state 2
+(process:15753): libfprint-SSM-DEBUG: 10:50:25.768: [cs9711] M_LOOP_NUM_STATES entering state 3
+(process:15753): libfprint-cs9711-DEBUG: 10:50:25.768: Sent command 0x4
+(process:15753): libfprint-cs9711-DEBUG: 10:50:25.768: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:25.836: [cs9711] M_LOOP_NUM_STATES entering state 4
+(process:15753): libfprint-cs9711-DEBUG: 10:50:25.836: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:25.837: [cs9711] M_LOOP_NUM_STATES entering state 5
+(process:15753): libfprint-cs9711-DEBUG: 10:50:25.837: Sent command 0x2
+(process:15753): libfprint-cs9711-DEBUG: 10:50:25.837: Frame 24 of this press differs from the last by 12.3
+(process:15753): libfprint-SSM-DEBUG: 10:50:25.837: [cs9711] M_LOOP_NUM_STATES entering state 0
+(process:15753): libfprint-cs9711-DEBUG: 10:50:25.837: Sent command 0x1
+(process:15753): libfprint-SSM-DEBUG: 10:50:25.837: [cs9711] M_LOOP_NUM_STATES entering state 1
+(process:15753): libfprint-cs9711-DEBUG: 10:50:25.837: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:25.875: [cs9711] M_LOOP_NUM_STATES entering state 2
+(process:15753): libfprint-SSM-DEBUG: 10:50:26.125: [cs9711] M_LOOP_NUM_STATES entering state 3
+(process:15753): libfprint-cs9711-DEBUG: 10:50:26.125: Sent command 0x4
+(process:15753): libfprint-cs9711-DEBUG: 10:50:26.125: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:26.194: [cs9711] M_LOOP_NUM_STATES entering state 4
+(process:15753): libfprint-cs9711-DEBUG: 10:50:26.194: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:26.194: [cs9711] M_LOOP_NUM_STATES entering state 5
+(process:15753): libfprint-cs9711-DEBUG: 10:50:26.194: Sent command 0x2
+(process:15753): libfprint-cs9711-DEBUG: 10:50:26.194: Frame 25 of this press differs from the last by 12.6
+(process:15753): libfprint-SSM-DEBUG: 10:50:26.194: [cs9711] M_LOOP_NUM_STATES entering state 0
+(process:15753): libfprint-cs9711-DEBUG: 10:50:26.194: Sent command 0x1
+(process:15753): libfprint-SSM-DEBUG: 10:50:26.194: [cs9711] M_LOOP_NUM_STATES entering state 1
+(process:15753): libfprint-cs9711-DEBUG: 10:50:26.194: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:26.232: [cs9711] M_LOOP_NUM_STATES entering state 2
+(process:15753): libfprint-SSM-DEBUG: 10:50:26.482: [cs9711] M_LOOP_NUM_STATES entering state 3
+(process:15753): libfprint-cs9711-DEBUG: 10:50:26.483: Sent command 0x4
+(process:15753): libfprint-cs9711-DEBUG: 10:50:26.483: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:26.551: [cs9711] M_LOOP_NUM_STATES entering state 4
+(process:15753): libfprint-cs9711-DEBUG: 10:50:26.551: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:26.552: [cs9711] M_LOOP_NUM_STATES entering state 5
+(process:15753): libfprint-cs9711-DEBUG: 10:50:26.552: Sent command 0x2
+(process:15753): libfprint-cs9711-DEBUG: 10:50:26.552: Frame 26 of this press differs from the last by 12.6
+(process:15753): libfprint-SSM-DEBUG: 10:50:26.552: [cs9711] M_LOOP_NUM_STATES entering state 0
+(process:15753): libfprint-cs9711-DEBUG: 10:50:26.552: Sent command 0x1
+(process:15753): libfprint-SSM-DEBUG: 10:50:26.552: [cs9711] M_LOOP_NUM_STATES entering state 1
+(process:15753): libfprint-cs9711-DEBUG: 10:50:26.552: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:26.589: [cs9711] M_LOOP_NUM_STATES entering state 2
+(process:15753): libfprint-SSM-DEBUG: 10:50:26.840: [cs9711] M_LOOP_NUM_STATES entering state 3
+(process:15753): libfprint-cs9711-DEBUG: 10:50:26.840: Sent command 0x4
+(process:15753): libfprint-cs9711-DEBUG: 10:50:26.840: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:26.909: [cs9711] M_LOOP_NUM_STATES entering state 4
+(process:15753): libfprint-cs9711-DEBUG: 10:50:26.909: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:26.909: [cs9711] M_LOOP_NUM_STATES entering state 5
+(process:15753): libfprint-cs9711-DEBUG: 10:50:26.909: Sent command 0x2
+(process:15753): libfprint-cs9711-DEBUG: 10:50:26.909: Frame 27 of this press differs from the last by 11.6
+(process:15753): libfprint-SSM-DEBUG: 10:50:26.909: [cs9711] M_LOOP_NUM_STATES entering state 0
+(process:15753): libfprint-cs9711-DEBUG: 10:50:26.909: Sent command 0x1
+(process:15753): libfprint-SSM-DEBUG: 10:50:26.909: [cs9711] M_LOOP_NUM_STATES entering state 1
+(process:15753): libfprint-cs9711-DEBUG: 10:50:26.909: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:26.947: [cs9711] M_LOOP_NUM_STATES entering state 2
+(process:15753): libfprint-SSM-DEBUG: 10:50:27.197: [cs9711] M_LOOP_NUM_STATES entering state 3
+(process:15753): libfprint-cs9711-DEBUG: 10:50:27.197: Sent command 0x4
+(process:15753): libfprint-cs9711-DEBUG: 10:50:27.197: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:27.266: [cs9711] M_LOOP_NUM_STATES entering state 4
+(process:15753): libfprint-cs9711-DEBUG: 10:50:27.266: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:27.266: [cs9711] M_LOOP_NUM_STATES entering state 5
+(process:15753): libfprint-cs9711-DEBUG: 10:50:27.266: Sent command 0x2
+(process:15753): libfprint-cs9711-DEBUG: 10:50:27.266: Frame 28 of this press differs from the last by 10.6
+(process:15753): libfprint-SSM-DEBUG: 10:50:27.266: [cs9711] M_LOOP_NUM_STATES entering state 0
+(process:15753): libfprint-cs9711-DEBUG: 10:50:27.273: Sent command 0x1
+(process:15753): libfprint-SSM-DEBUG: 10:50:27.273: [cs9711] M_LOOP_NUM_STATES entering state 1
+(process:15753): libfprint-cs9711-DEBUG: 10:50:27.273: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:27.304: [cs9711] M_LOOP_NUM_STATES entering state 2
+(process:15753): libfprint-SSM-DEBUG: 10:50:27.554: [cs9711] M_LOOP_NUM_STATES entering state 3
+(process:15753): libfprint-cs9711-DEBUG: 10:50:27.554: Sent command 0x4
+(process:15753): libfprint-cs9711-DEBUG: 10:50:27.554: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:27.623: [cs9711] M_LOOP_NUM_STATES entering state 4
+(process:15753): libfprint-cs9711-DEBUG: 10:50:27.623: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:27.623: [cs9711] M_LOOP_NUM_STATES entering state 5
+(process:15753): libfprint-cs9711-DEBUG: 10:50:27.623: Sent command 0x2
+(process:15753): libfprint-cs9711-DEBUG: 10:50:27.623: Frame 29 of this press differs from the last by 11.4
+(process:15753): libfprint-SSM-DEBUG: 10:50:27.623: [cs9711] M_LOOP_NUM_STATES entering state 0
+(process:15753): libfprint-cs9711-DEBUG: 10:50:27.623: Sent command 0x1
+(process:15753): libfprint-SSM-DEBUG: 10:50:27.623: [cs9711] M_LOOP_NUM_STATES entering state 1
+(process:15753): libfprint-cs9711-DEBUG: 10:50:27.623: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:27.661: [cs9711] M_LOOP_NUM_STATES entering state 2
+(process:15753): libfprint-SSM-DEBUG: 10:50:27.912: [cs9711] M_LOOP_NUM_STATES entering state 3
+(process:15753): libfprint-cs9711-DEBUG: 10:50:27.912: Sent command 0x4
+(process:15753): libfprint-cs9711-DEBUG: 10:50:27.912: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:27.980: [cs9711] M_LOOP_NUM_STATES entering state 4
+(process:15753): libfprint-cs9711-DEBUG: 10:50:27.980: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:27.980: [cs9711] M_LOOP_NUM_STATES entering state 5
+(process:15753): libfprint-cs9711-DEBUG: 10:50:27.980: Sent command 0x2
+(process:15753): libfprint-cs9711-DEBUG: 10:50:27.980: Frame 30 of this press differs from the last by 11.3
+(process:15753): libfprint-SSM-DEBUG: 10:50:27.980: [cs9711] M_LOOP_NUM_STATES entering state 0
+(process:15753): libfprint-cs9711-DEBUG: 10:50:27.981: Sent command 0x1
+(process:15753): libfprint-SSM-DEBUG: 10:50:27.981: [cs9711] M_LOOP_NUM_STATES entering state 1
+(process:15753): libfprint-cs9711-DEBUG: 10:50:27.981: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:28.018: [cs9711] M_LOOP_NUM_STATES entering state 2
+(process:15753): libfprint-SSM-DEBUG: 10:50:28.269: [cs9711] M_LOOP_NUM_STATES entering state 3
+(process:15753): libfprint-cs9711-DEBUG: 10:50:28.269: Sent command 0x4
+(process:15753): libfprint-cs9711-DEBUG: 10:50:28.269: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:28.338: [cs9711] M_LOOP_NUM_STATES entering state 4
+(process:15753): libfprint-cs9711-DEBUG: 10:50:28.338: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:28.338: [cs9711] M_LOOP_NUM_STATES entering state 5
+(process:15753): libfprint-cs9711-DEBUG: 10:50:28.338: Sent command 0x2
+(process:15753): libfprint-cs9711-DEBUG: 10:50:28.338: Frame 31 of this press differs from the last by 11.6
+(process:15753): libfprint-SSM-DEBUG: 10:50:28.338: [cs9711] M_LOOP_NUM_STATES entering state 0
+(process:15753): libfprint-cs9711-DEBUG: 10:50:28.338: Sent command 0x1
+(process:15753): libfprint-SSM-DEBUG: 10:50:28.338: [cs9711] M_LOOP_NUM_STATES entering state 1
+(process:15753): libfprint-cs9711-DEBUG: 10:50:28.338: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:28.376: [cs9711] M_LOOP_NUM_STATES entering state 2
+(process:15753): libfprint-SSM-DEBUG: 10:50:28.626: [cs9711] M_LOOP_NUM_STATES entering state 3
+(process:15753): libfprint-cs9711-DEBUG: 10:50:28.627: Sent command 0x4
+(process:15753): libfprint-cs9711-DEBUG: 10:50:28.627: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:28.695: [cs9711] M_LOOP_NUM_STATES entering state 4
+(process:15753): libfprint-cs9711-DEBUG: 10:50:28.695: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:28.695: [cs9711] M_LOOP_NUM_STATES entering state 5
+(process:15753): libfprint-cs9711-DEBUG: 10:50:28.696: Sent command 0x2
+(process:15753): libfprint-cs9711-DEBUG: 10:50:28.696: Frame 32 of this press differs from the last by 12.4
+(process:15753): libfprint-SSM-DEBUG: 10:50:28.696: [cs9711] M_LOOP_NUM_STATES entering state 0
+(process:15753): libfprint-cs9711-DEBUG: 10:50:28.702: Sent command 0x1
+(process:15753): libfprint-SSM-DEBUG: 10:50:28.703: [cs9711] M_LOOP_NUM_STATES entering state 1
+(process:15753): libfprint-cs9711-DEBUG: 10:50:28.703: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:28.733: [cs9711] M_LOOP_NUM_STATES entering state 2
+(process:15753): libfprint-SSM-DEBUG: 10:50:28.984: [cs9711] M_LOOP_NUM_STATES entering state 3
+(process:15753): libfprint-cs9711-DEBUG: 10:50:28.984: Sent command 0x4
+(process:15753): libfprint-cs9711-DEBUG: 10:50:28.984: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:29.053: [cs9711] M_LOOP_NUM_STATES entering state 4
+(process:15753): libfprint-cs9711-DEBUG: 10:50:29.053: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:29.053: [cs9711] M_LOOP_NUM_STATES entering state 5
+(process:15753): libfprint-cs9711-DEBUG: 10:50:29.053: Sent command 0x2
+(process:15753): libfprint-cs9711-DEBUG: 10:50:29.053: Frame 33 of this press differs from the last by 12.2
+(process:15753): libfprint-SSM-DEBUG: 10:50:29.053: [cs9711] M_LOOP_NUM_STATES entering state 0
+(process:15753): libfprint-cs9711-DEBUG: 10:50:29.053: Sent command 0x1
+(process:15753): libfprint-SSM-DEBUG: 10:50:29.053: [cs9711] M_LOOP_NUM_STATES entering state 1
+(process:15753): libfprint-cs9711-DEBUG: 10:50:29.053: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:29.091: [cs9711] M_LOOP_NUM_STATES entering state 2
+(process:15753): libfprint-SSM-DEBUG: 10:50:29.341: [cs9711] M_LOOP_NUM_STATES entering state 3
+(process:15753): libfprint-cs9711-DEBUG: 10:50:29.342: Sent command 0x4
+(process:15753): libfprint-cs9711-DEBUG: 10:50:29.342: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:29.410: [cs9711] M_LOOP_NUM_STATES entering state 4
+(process:15753): libfprint-cs9711-DEBUG: 10:50:29.410: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:29.410: [cs9711] M_LOOP_NUM_STATES entering state 5
+(process:15753): libfprint-cs9711-DEBUG: 10:50:29.410: Sent command 0x2
+(process:15753): libfprint-cs9711-DEBUG: 10:50:29.411: Frame 34 of this press differs from the last by 11.7
+(process:15753): libfprint-SSM-DEBUG: 10:50:29.411: [cs9711] M_LOOP_NUM_STATES entering state 0
+(process:15753): libfprint-cs9711-DEBUG: 10:50:29.418: Sent command 0x1
+(process:15753): libfprint-SSM-DEBUG: 10:50:29.418: [cs9711] M_LOOP_NUM_STATES entering state 1
+(process:15753): libfprint-cs9711-DEBUG: 10:50:29.418: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:29.448: [cs9711] M_LOOP_NUM_STATES entering state 2
+(process:15753): libfprint-SSM-DEBUG: 10:50:29.698: [cs9711] M_LOOP_NUM_STATES entering state 3
+(process:15753): libfprint-cs9711-DEBUG: 10:50:29.699: Sent command 0x4
+(process:15753): libfprint-cs9711-DEBUG: 10:50:29.699: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:29.767: [cs9711] M_LOOP_NUM_STATES entering state 4
+(process:15753): libfprint-cs9711-DEBUG: 10:50:29.767: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:29.767: [cs9711] M_LOOP_NUM_STATES entering state 5
+(process:15753): libfprint-cs9711-DEBUG: 10:50:29.768: Sent command 0x2
+(process:15753): libfprint-cs9711-DEBUG: 10:50:29.768: Frame 35 of this press differs from the last by 11.7
+(process:15753): libfprint-SSM-DEBUG: 10:50:29.768: [cs9711] M_LOOP_NUM_STATES entering state 0
+(process:15753): libfprint-cs9711-DEBUG: 10:50:29.775: Sent command 0x1
+(process:15753): libfprint-SSM-DEBUG: 10:50:29.775: [cs9711] M_LOOP_NUM_STATES entering state 1
+(process:15753): libfprint-cs9711-DEBUG: 10:50:29.775: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:29.805: [cs9711] M_LOOP_NUM_STATES entering state 2
+(process:15753): libfprint-SSM-DEBUG: 10:50:30.056: [cs9711] M_LOOP_NUM_STATES entering state 3
+(process:15753): libfprint-cs9711-DEBUG: 10:50:30.056: Sent command 0x4
+(process:15753): libfprint-cs9711-DEBUG: 10:50:30.056: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:30.124: [cs9711] M_LOOP_NUM_STATES entering state 4
+(process:15753): libfprint-cs9711-DEBUG: 10:50:30.124: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:30.125: [cs9711] M_LOOP_NUM_STATES entering state 5
+(process:15753): libfprint-cs9711-DEBUG: 10:50:30.125: Sent command 0x2
+(process:15753): libfprint-cs9711-DEBUG: 10:50:30.125: Frame 36 of this press differs from the last by 11.9
+(process:15753): libfprint-SSM-DEBUG: 10:50:30.125: [cs9711] M_LOOP_NUM_STATES entering state 0
+(process:15753): libfprint-cs9711-DEBUG: 10:50:30.125: Sent command 0x1
+(process:15753): libfprint-SSM-DEBUG: 10:50:30.125: [cs9711] M_LOOP_NUM_STATES entering state 1
+(process:15753): libfprint-cs9711-DEBUG: 10:50:30.125: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:30.163: [cs9711] M_LOOP_NUM_STATES entering state 2
+(process:15753): libfprint-SSM-DEBUG: 10:50:30.413: [cs9711] M_LOOP_NUM_STATES entering state 3
+(process:15753): libfprint-cs9711-DEBUG: 10:50:30.413: Sent command 0x4
+(process:15753): libfprint-cs9711-DEBUG: 10:50:30.413: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:30.482: [cs9711] M_LOOP_NUM_STATES entering state 4
+(process:15753): libfprint-cs9711-DEBUG: 10:50:30.482: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:30.482: [cs9711] M_LOOP_NUM_STATES entering state 5
+(process:15753): libfprint-cs9711-DEBUG: 10:50:30.482: Sent command 0x2
+(process:15753): libfprint-cs9711-DEBUG: 10:50:30.482: Frame 37 of this press differs from the last by 12.8
+(process:15753): libfprint-SSM-DEBUG: 10:50:30.482: [cs9711] M_LOOP_NUM_STATES entering state 0
+(process:15753): libfprint-cs9711-DEBUG: 10:50:30.482: Sent command 0x1
+(process:15753): libfprint-SSM-DEBUG: 10:50:30.482: [cs9711] M_LOOP_NUM_STATES entering state 1
+(process:15753): libfprint-cs9711-DEBUG: 10:50:30.482: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:30.520: [cs9711] M_LOOP_NUM_STATES entering state 2
+(process:15753): libfprint-SSM-DEBUG: 10:50:30.770: [cs9711] M_LOOP_NUM_STATES entering state 3
+(process:15753): libfprint-cs9711-DEBUG: 10:50:30.770: Sent command 0x4
+(process:15753): libfprint-cs9711-DEBUG: 10:50:30.770: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:30.839: [cs9711] M_LOOP_NUM_STATES entering state 4
+(process:15753): libfprint-cs9711-DEBUG: 10:50:30.839: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:30.839: [cs9711] M_LOOP_NUM_STATES entering state 5
+(process:15753): libfprint-cs9711-DEBUG: 10:50:30.839: Sent command 0x2
+(process:15753): libfprint-cs9711-DEBUG: 10:50:30.839: Frame 38 of this press differs from the last by 12.8
+(process:15753): libfprint-SSM-DEBUG: 10:50:30.839: [cs9711] M_LOOP_NUM_STATES entering state 0
+(process:15753): libfprint-cs9711-DEBUG: 10:50:30.839: Sent command 0x1
+(process:15753): libfprint-SSM-DEBUG: 10:50:30.839: [cs9711] M_LOOP_NUM_STATES entering state 1
+(process:15753): libfprint-cs9711-DEBUG: 10:50:30.839: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:30.877: [cs9711] M_LOOP_NUM_STATES entering state 2
+(process:15753): libfprint-SSM-DEBUG: 10:50:31.127: [cs9711] M_LOOP_NUM_STATES entering state 3
+(process:15753): libfprint-cs9711-DEBUG: 10:50:31.127: Sent command 0x4
+(process:15753): libfprint-cs9711-DEBUG: 10:50:31.128: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:31.196: [cs9711] M_LOOP_NUM_STATES entering state 4
+(process:15753): libfprint-cs9711-DEBUG: 10:50:31.196: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:31.196: [cs9711] M_LOOP_NUM_STATES entering state 5
+(process:15753): libfprint-cs9711-DEBUG: 10:50:31.196: Sent command 0x2
+(process:15753): libfprint-cs9711-DEBUG: 10:50:31.196: Frame 39 of this press differs from the last by 11.0
+(process:15753): libfprint-SSM-DEBUG: 10:50:31.196: [cs9711] M_LOOP_NUM_STATES entering state 0
+(process:15753): libfprint-cs9711-DEBUG: 10:50:31.196: Sent command 0x1
+(process:15753): libfprint-SSM-DEBUG: 10:50:31.196: [cs9711] M_LOOP_NUM_STATES entering state 1
+(process:15753): libfprint-cs9711-DEBUG: 10:50:31.196: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:31.234: [cs9711] M_LOOP_NUM_STATES entering state 2
+(process:15753): libfprint-SSM-DEBUG: 10:50:31.485: [cs9711] M_LOOP_NUM_STATES entering state 3
+(process:15753): libfprint-cs9711-DEBUG: 10:50:31.485: Sent command 0x4
+(process:15753): libfprint-cs9711-DEBUG: 10:50:31.485: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:31.553: [cs9711] M_LOOP_NUM_STATES entering state 4
+(process:15753): libfprint-cs9711-DEBUG: 10:50:31.553: Reading 8000 bytes
+(process:15753): libfprint-SSM-DEBUG: 10:50:31.553: [cs9711] M_LOOP_NUM_STATES entering state 5
+(process:15753): libfprint-cs9711-DEBUG: 10:50:31.554: Sent command 0x2
+(process:15753): libfprint-cs9711-DEBUG: 10:50:31.554: Frame 40 of this press differs from the last by 11.3
+(process:15753): libfprint-image_device-DEBUG: 10:50:31.554: Abort current operation due to retry (no early-reporting)
+(process:15753): libfprint-image_device-DEBUG: 10:50:31.554: Deactivating image device
+(process:15753): libfprint-image_device-DEBUG: 10:50:31.554: Image device internal state change from FPI_IMAGE_DEVICE_STATE_CAPTURE to FPI_IMAGE_DEVICE_STATE_DEACTIVATING
+(process:15753): libfprint-SSM-DEBUG: 10:50:31.554: [cs9711] M_LOOP_NUM_STATES entering state 0
+(process:15753): libfprint-cs9711-DEBUG: 10:50:31.554: Sent command 0x2
+(process:15753): libfprint-SSM-DEBUG: 10:50:31.554: [cs9711] M_LOOP_NUM_STATES completed successfully
+(process:15753): libfprint-image_device-DEBUG: 10:50:31.554: Image device deactivation completed
+(process:15753): libfprint-image_device-DEBUG: 10:50:31.554: Image device internal state change from FPI_IMAGE_DEVICE_STATE_DEACTIVATING to FPI_IMAGE_DEVICE_STATE_INACTIVE
+(process:15753): libfprint-device-DEBUG: 10:50:31.554: Device reported generic error (Please try again after removing the finger first.) during action; action was: FPI_DEVICE_ACTION_CAPTURE
+(process:15753): libfprint-device-DEBUG: 10:50:31.554: Device reported capture completion
+(process:15753): libfprint-device-DEBUG: 10:50:31.554: Device reported finger status change: FP_FINGER_STATUS_NONE
+(process:15753): libfprint-device-DEBUG: 10:50:31.554: Completing action FPI_DEVICE_ACTION_CAPTURE in idle!
+(process:15753): libfprint-device-DEBUG: 10:50:31.554: Updated temperature model after 35.90 seconds, ratio 0.27 -> 0.40, active 0 -> 0, FP_TEMPERATURE_WARM -> FP_TEMPERATURE_WARM
+
+(process:15753): libfprint-WARNING **: 10:50:31.554: Error capturing data: Please try again after removing the finger first.
+(process:15753): libfprint-image_device-DEBUG: 10:50:31.554: Image device close completed
+(process:15753): libfprint-device-DEBUG: 10:50:31.554: Device reported close completion
+(process:15753): libfprint-device-DEBUG: 10:50:31.554: Completing action FPI_DEVICE_ACTION_CLOSE in idle!
+(process:15753): libfprint-device-DEBUG: 10:50:31.554: Updated temperature model after 0.00 seconds, ratio 0.40 -> 0.40, active 0 -> 0, FP_TEMPERATURE_WARM -> FP_TEMPERATURE_WARM

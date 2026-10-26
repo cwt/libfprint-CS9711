@@ -1,0 +1,65 @@
+(process:14057): libfprint-context-DEBUG: 10:44:57.619: Initializing FpContext (libfprint version 1.94.6)
+(process:14057): libfprint-context-DEBUG: 10:44:57.625: No driver found for USB device 1D6B:0003
+(process:14057): libfprint-context-DEBUG: 10:44:57.625: No driver found for USB device 0C45:6D1A
+(process:14057): libfprint-context-DEBUG: 10:44:57.625: No driver found for USB device 096E:0853
+(process:14057): libfprint-context-DEBUG: 10:44:57.625: No driver found for USB device 8087:0026
+(process:14057): libfprint-context-DEBUG: 10:44:57.625: No driver found for USB device 058F:6362
+(process:14057): libfprint-context-DEBUG: 10:44:57.625: No driver found for USB device 25A7:FA11
+(process:14057): libfprint-context-DEBUG: 10:44:57.625: No driver found for USB device 1EA7:0169
+(process:14057): libfprint-context-DEBUG: 10:44:57.625: No driver found for USB device 1A40:0101
+(process:14057): libfprint-context-DEBUG: 10:44:57.625: No driver found for USB device 1D6B:0002
+(process:14057): libfprint-context-DEBUG: 10:44:57.625: No driver found for USB device 0B95:1790
+(process:14057): libfprint-context-DEBUG: 10:44:57.625: No driver found for USB device 1D6B:0003
+(process:14057): libfprint-context-DEBUG: 10:44:57.625: No driver found for USB device 1D6B:0002
+(process:14057): libfprint-device-DEBUG: 10:44:57.629: Device reported probe completion
+(process:14057): libfprint-device-DEBUG: 10:44:57.629: Completing action FPI_DEVICE_ACTION_PROBE in idle!
+(process:14057): libfprint-device-DEBUG: 10:44:57.629: Updated temperature model after 0.00 seconds, ratio 0.27 -> 0.27, active 0 -> 0, FP_TEMPERATURE_COLD -> FP_TEMPERATURE_COLD
+Selected device 0 (Chipsailing CS9711Fingprint) claimed by cs9711 driver
+(process:14057): libfprint-image_device-DEBUG: 10:44:57.728: Image device open completed
+(process:14057): libfprint-device-DEBUG: 10:44:57.728: Device reported open completion
+(process:14057): libfprint-device-DEBUG: 10:44:57.728: Completing action FPI_DEVICE_ACTION_OPEN in idle!
+(process:14057): libfprint-device-DEBUG: 10:44:57.728: Updated temperature model after 0.10 seconds, ratio 0.27 -> 0.27, active 0 -> 0, FP_TEMPERATURE_COLD -> FP_TEMPERATURE_COLD
+Opened device. (process:14057): libfprint-device-DEBUG: 10:44:57.728: Updated temperature model after 0.00 seconds, ratio 0.27 -> 0.27, active 1 -> 1, FP_TEMPERATURE_COLD -> FP_TEMPERATURE_COLD
+(process:14057): libfprint-image_device-DEBUG: 10:44:57.728: Activating image device
+(process:14057): libfprint-image_device-DEBUG: 10:44:57.728: Image device internal state change from FPI_IMAGE_DEVICE_STATE_INACTIVE to FPI_IMAGE_DEVICE_STATE_ACTIVATING
+(process:14057): libfprint-SSM-DEBUG: 10:44:57.728: [cs9711] M_INIT_STATE_COUNT entering state 0
+(process:14057): libfprint-cs9711-DEBUG: 10:44:57.728: Reading 8000 bytes
+(process:14057): libfprint-SSM-DEBUG: 10:44:57.778: [cs9711] M_INIT_STATE_COUNT entering state 1
+(process:14057): libfprint-cs9711-DEBUG: 10:44:57.778: Sent command 0x2
+(process:14057): libfprint-SSM-DEBUG: 10:44:57.778: [cs9711] M_INIT_STATE_COUNT entering state 2
+(process:14057): libfprint-cs9711-DEBUG: 10:44:57.778: Reading 8000 bytes
+(process:14057): libfprint-SSM-DEBUG: 10:44:57.828: [cs9711] M_INIT_STATE_COUNT entering state 3
+(process:14057): libfprint-cs9711-DEBUG: 10:44:57.828: Sent command 0x1
+(process:14057): libfprint-SSM-DEBUG: 10:44:57.828: [cs9711] M_INIT_STATE_COUNT entering state 8
+(process:14057): libfprint-cs9711-DEBUG: 10:44:57.828: Reading 8000 bytes
+(process:14057): libfprint-device-DEBUG: 10:44:57.840: Updated temperature model after 0.11 seconds, ratio 0.27 -> 0.27, active 1 -> 1, FP_TEMPERATURE_COLD -> FP_TEMPERATURE_WARM
+(process:14057): libfprint-cs9711-DEBUG: 10:44:57.859: Read 8 of requested 8000
+(process:14057): libfprint-cs9711-DEBUG: 10:44:57.859: Init response valid
+(process:14057): libfprint-SSM-DEBUG: 10:44:57.859: [cs9711] M_INIT_STATE_COUNT completed successfully
+(process:14057): libfprint-image_device-DEBUG: 10:44:57.859: Image device activation completed
+(process:14057): libfprint-image_device-DEBUG: 10:44:57.859: Image device internal state change from FPI_IMAGE_DEVICE_STATE_ACTIVATING to FPI_IMAGE_DEVICE_STATE_IDLE
+(process:14057): libfprint-image_device-DEBUG: 10:44:57.860: Image device internal state change from FPI_IMAGE_DEVICE_STATE_IDLE to FPI_IMAGE_DEVICE_STATE_AWAIT_FINGER_ON
+(process:14057): libfprint-SSM-DEBUG: 10:44:57.860: [cs9711] M_LOOP_NUM_STATES entering state 0
+(process:14057): libfprint-SSM-DEBUG: 10:44:57.860: [cs9711] M_LOOP_NUM_STATES entering state 2
+(process:14057): libfprint-device-DEBUG: 10:44:57.860: Device reported finger status change: FP_FINGER_STATUS_NEEDED
+(process:14057): libfprint-SSM-DEBUG: 10:44:58.110: [cs9711] M_LOOP_NUM_STATES entering state 3
+(process:14057): libfprint-cs9711-DEBUG: 10:44:58.110: Sent command 0x4
+(process:14057): libfprint-cs9711-DEBUG: 10:44:58.110: Reading 8000 bytes
+(process:14057): libfprint-device-DEBUG: 10:45:01.603: Idle cancelling on ongoing operation!
+(process:14057): libfprint-image_device-DEBUG: 10:45:01.603: Deactivating image device
+(process:14057): libfprint-image_device-DEBUG: 10:45:01.603: Image device internal state change from FPI_IMAGE_DEVICE_STATE_AWAIT_FINGER_ON to FPI_IMAGE_DEVICE_STATE_DEACTIVATING
+(process:14057): libfprint-device-DEBUG: 10:45:01.603: Device reported finger status change: FP_FINGER_STATUS_NONE
+(process:14057): libfprint-cs9711-DEBUG: 10:45:01.604: Sent command 0x2
+(process:14057): libfprint-SSM-DEBUG: 10:45:01.604: [cs9711] M_LOOP_NUM_STATES completed successfully
+(process:14057): libfprint-image_device-DEBUG: 10:45:01.604: Image device deactivation completed
+(process:14057): libfprint-image_device-DEBUG: 10:45:01.604: Image device internal state change from FPI_IMAGE_DEVICE_STATE_DEACTIVATING to FPI_IMAGE_DEVICE_STATE_INACTIVE
+(process:14057): libfprint-device-DEBUG: 10:45:01.604: Device reported generic error (Operation was cancelled) during action; action was: FPI_DEVICE_ACTION_CAPTURE
+(process:14057): libfprint-device-DEBUG: 10:45:01.604: Device reported capture completion
+(process:14057): libfprint-device-DEBUG: 10:45:01.604: Completing action FPI_DEVICE_ACTION_CAPTURE in idle!
+(process:14057): libfprint-device-DEBUG: 10:45:01.604: Updated temperature model after 3.76 seconds, ratio 0.27 -> 0.28, active 0 -> 0, FP_TEMPERATURE_WARM -> FP_TEMPERATURE_WARM
+
+(process:14057): libfprint-WARNING **: 10:45:01.604: Error capturing data: Operation was cancelled
+(process:14057): libfprint-image_device-DEBUG: 10:45:01.604: Image device close completed
+(process:14057): libfprint-device-DEBUG: 10:45:01.604: Device reported close completion
+(process:14057): libfprint-device-DEBUG: 10:45:01.604: Completing action FPI_DEVICE_ACTION_CLOSE in idle!
+(process:14057): libfprint-device-DEBUG: 10:45:01.604: Updated temperature model after 0.00 seconds, ratio 0.28 -> 0.28, active 0 -> 0, FP_TEMPERATURE_WARM -> FP_TEMPERATURE_WARM
