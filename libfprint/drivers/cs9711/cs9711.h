@@ -49,6 +49,9 @@ struct _FpDeviceCs9711
   guint         bad_reads;
   guint         drain_reads;
   unsigned char prev_frame[CS9711_FRAME_SIZE];
+  unsigned char best_frame[CS9711_FRAME_SIZE];
+  double        best_mad;
+  gboolean      have_best;
 };
 
 G_DECLARE_FINAL_TYPE (FpDeviceCs9711, fpi_device_cs9711, FPI, DEVICE_CS9711, FpImageDevice)

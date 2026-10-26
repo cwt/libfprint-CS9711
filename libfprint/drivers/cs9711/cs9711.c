@@ -22,6 +22,7 @@
 
 #define FP_COMPONENT "cs9711"
 
+#include <math.h>
 #include "drivers_api.h"
 #include "cs9711.h"
 
@@ -310,13 +311,23 @@ m_init_complete (FpiSsm *ssm, FpDevice *dev, GError *error)
  * scanning until two frames in a row agree (the finger has settled), then
  * keep scanning until a SCAN times out (the finger has lifted) and only then
  * report finger-off. The settled frame is submitted at once, or at the lift
- * during enroll. A finger that lifts before it settles, or never settles,
- * gets a retry instead of a moving frame.
+ * during enroll.
+ *
+ * How much a still finger's frames differ depends on the unit: 0.6 on one
+ * 2541:0236, 9-13 on another with the same ID. So the threshold is only a fast
+ * path. A finger that has not passed it by the fifth frame, or lifts after the
+ * third, gets the frame that differed least from the one before it, never the
+ * first-contact frame. Only a touch that lifts within two frames gets a retry.
  */
 
 #define CS9711_LIFT_POLL_TIMEOUT 300  /* ms; a SCAN with a finger answers in ~70 ms */
+/* Both can be set at build time, for testing on another unit. */
+#ifndef CS9711_SETTLE_MAD
 #define CS9711_SETTLE_MAD 4.0         /* settled pairs measured <= 3.8, landing >= 4.6 */
-#define CS9711_SETTLE_MAX_FRAMES 5    /* ask for a new placement after this many */
+#endif
+#ifndef CS9711_SETTLE_MAX_FRAMES
+#define CS9711_SETTLE_MAX_FRAMES 5    /* then take the steadiest frame so far */
+#endif
 #define CS9711_MAX_BAD_READS 3
 
 enum {
@@ -340,6 +351,7 @@ m_press_reset (FpDeviceCs9711 *self)
   self->submitted = FALSE;
   self->lifted = FALSE;
   self->frames_in_press = 0;
+  self->have_best = FALSE;
 }
 
 static double
@@ -351,6 +363,33 @@ frame_mad (const guint8 *a, const guint8 *b)
     sum += ABS ((int) a[i] - (int) b[i]);
 
   return (double) sum / CS9711_FRAME_SIZE;
+}
+
+/* For logs from other units: why two frames differ. A change in mean is a
+ * brightness shift, in spread a contrast change; the correlation ignores both. */
+static void
+frame_stats_dbg (const guint8 *a, const guint8 *b)
+{
+  double ma = 0, mb = 0, va = 0, vb = 0, cov = 0;
+
+  for (gsize i = 0; i < CS9711_FRAME_SIZE; i++)
+    {
+      ma += a[i];
+      mb += b[i];
+    }
+  ma /= CS9711_FRAME_SIZE;
+  mb /= CS9711_FRAME_SIZE;
+  for (gsize i = 0; i < CS9711_FRAME_SIZE; i++)
+    {
+      double da = a[i] - ma, db = b[i] - mb;
+
+      va += da * da;
+      vb += db * db;
+      cov += da * db;
+    }
+  fp_dbg ("  mean %.1f -> %.1f, spread %.1f -> %.1f, correlation %.4f",
+          ma, mb, sqrt (va / CS9711_FRAME_SIZE), sqrt (vb / CS9711_FRAME_SIZE),
+          cov / sqrt (va * vb + 1e-9));
 }
 
 /* Leave the sensor idle and end the loop; m_loop_complete finishes deactivation. */
@@ -529,15 +568,16 @@ m_loop_frame_cb (FpiUsbTransfer *transfer,
       if (!self->submitted)
         {
           self->submitted = TRUE;
-          if (self->settled)
+          if (self->settled || self->have_best)
             {
-              /* Enroll: the settled frame is submitted now, see m_loop_frame_done. */
-              if (m_scan_submit_image (ssm, FP_IMAGE_DEVICE (dev), self->prev_frame) != 0)
+              /* Enroll's settled frame, see m_loop_frame_done, or the
+               * steadiest frame of a press that lifted before it settled. */
+              if (m_scan_submit_image (ssm, FP_IMAGE_DEVICE (dev), self->best_frame) != 0)
                 return;
             }
           else
             {
-              /* The finger left before it settled. */
+              /* A touch too short to compare two frames after landing. */
               fpi_image_device_retry_scan (FP_IMAGE_DEVICE (dev), FP_DEVICE_RETRY_GENERAL);
             }
         }
@@ -624,10 +664,25 @@ m_loop_frame_done (FpiSsm *ssm, FpDevice *dev)
   mad = frame_mad (self->prev_frame, self->image_buffer);
   fp_dbg ("Frame %u of this press differs from the last by %.1f",
           self->frames_in_press, mad);
+  frame_stats_dbg (self->prev_frame, self->image_buffer);
   memcpy (self->prev_frame, self->image_buffer, CS9711_FRAME_SIZE);
 
-  if (mad < CS9711_SETTLE_MAD)
+  /* Frame 2 is compared with the first-contact frame, so it never counts. */
+  if (self->frames_in_press >= 3 && (!self->have_best || mad < self->best_mad))
     {
+      memcpy (self->best_frame, self->image_buffer, CS9711_FRAME_SIZE);
+      self->best_mad = mad;
+      self->have_best = TRUE;
+    }
+
+  if (mad < CS9711_SETTLE_MAD || self->frames_in_press >= CS9711_SETTLE_MAX_FRAMES)
+    {
+      if (mad < CS9711_SETTLE_MAD)
+        memcpy (self->best_frame, self->image_buffer, CS9711_FRAME_SIZE);
+      else
+        fp_dbg ("Not settled after %u frames, taking the frame that differed by %.1f",
+                self->frames_in_press, self->best_mad);
+
       /* libfprint completes an enrollment as soon as the last image is
        * processed, so in enroll the image is submitted when the finger
        * lifts. Elsewhere it is submitted now, for an early result. */
@@ -638,16 +693,9 @@ m_loop_frame_done (FpiSsm *ssm, FpDevice *dev)
       else
         {
           self->submitted = TRUE;
-          if (m_scan_submit_image (ssm, image_device, self->prev_frame) != 0)
+          if (m_scan_submit_image (ssm, image_device, self->best_frame) != 0)
             return;
         }
-    }
-  else if (self->frames_in_press >= CS9711_SETTLE_MAX_FRAMES)
-    {
-      /* The finger keeps moving: ask for a new placement. Outside enroll
-       * this deactivates the device, which m_loop_state then sees. */
-      self->submitted = TRUE;
-      fpi_image_device_retry_scan (image_device, FP_DEVICE_RETRY_REMOVE_FINGER);
     }
 
   fpi_ssm_jump_to_state (ssm, M_LOOP_INIT_SEND);
