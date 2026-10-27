@@ -35,6 +35,23 @@ struct _FpDeviceCs9711
   FpImageDevice parent;
 
   unsigned char image_buffer[CS9711_FRAME_SIZE];
+
+  /* Press loop (one per finger placement), see cs9711.c */
+  FpiSsm       *loop_ssm;
+  GCancellable *cancellable;
+  gboolean      deactivating;
+  gboolean      need_init;
+  gboolean      finger_on;
+  gboolean      settled;
+  gboolean      submitted;
+  gboolean      lifted;
+  guint         frames_in_press;
+  guint         bad_reads;
+  guint         drain_reads;
+  unsigned char prev_frame[CS9711_FRAME_SIZE];
+  unsigned char best_frame[CS9711_FRAME_SIZE];
+  double        best_mad;
+  gboolean      have_best;
 };
 
 G_DECLARE_FINAL_TYPE (FpDeviceCs9711, fpi_device_cs9711, FPI, DEVICE_CS9711, FpImageDevice)
