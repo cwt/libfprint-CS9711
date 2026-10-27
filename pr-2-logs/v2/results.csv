@@ -1,0 +1,11 @@
+test,attempt,result,best_mad,first_frame_to_result_ms,frames_until_lift,fallback_used
+same-finger,1,MATCH!,10.3,1434,15,yes
+same-finger,2,MATCH!,10.1,1432,16,yes
+same-finger,3,MATCH!,11.5,1431,14,yes
+same-finger,4,MATCH!,11.8,1431,15,yes
+same-finger,5,MATCH!,11.7,1430,13,yes
+same-finger,6,MATCH!,10.9,1429,14,yes
+different-finger,1,NO MATCH!,11.1,1435,14,yes
+different-finger,2,NO MATCH!,12.6,1433,13,yes
+different-finger,3,NO MATCH!,10.9,1432,12,yes
+different-finger,4,NO MATCH!,13.5,1433,10,yes
